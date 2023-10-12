@@ -60,8 +60,7 @@ io.on('connection', async (socket) => {
         saveMessages(payload)    
     })        
     socket.on('fetch-messages', ({receiver}) => {
-        fetchMessages(io, socket.id, receiver)
-        console.log('hello')    
+        fetchMessages(io, socket.id, receiver)  
     })
     socket.on('disconnect', () => {
         users = users.filter((user) => user.userID !== socket.id)
