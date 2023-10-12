@@ -56,30 +56,28 @@ const setActiveUser = (element, username, userID) => {
     }
 
     element.classList.add('table-active')
-    console.log(1)
     msgDiv.classList.remove('d-none')
-    console.log(2)
     messages.classList.remove('d-none')
-    console.log(3)
     messages.innerHTML = ''
-    console.log(4)
     socket.emit('fetch-messages', {receiver : userID})
-    console.log(5)
     const notify = document.getElementById(userID)
     notify.classList.add('d-none')
-    console.log(6)
 }
 
 const appendMessage = ({message, time, backgroundColor, position}) => {
     let div = document.createElement('div')
-
+    console.log(1)
     div.classList.add('message', 'bg-opacity-25', 'm-2', 'px-2', 'py-1', backgroundColor, position)
+    console.log(2)
     div.innerHTML = `
         <span class='msg-text'>${message}</span>
         <span class='msg-time'>${time}</span>
     `
+    console.log(3)
     messages.append(div)
+    console.log(4)
     messages.scrollTo(0, messages.scrollHeight)
+    console.log(5)
 }
 
 socket.on('users-data', ({users}) => {
