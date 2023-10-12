@@ -1,4 +1,4 @@
-const socket = io('http://localhost:4000', {autoConnect : false})
+const socket = io('https://port-0-private-chat-koh2xlj3ufoqd.sel4.cloudtype.app', {autoConnect : false})
 
 socket.onAny((event, ...args) => {
     console.log(event, ...args)
