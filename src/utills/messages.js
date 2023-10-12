@@ -8,8 +8,9 @@ const getToken = (sender, receiver) => {
 const saveMessages = async({from, to, message, time}) => {
     const token = getToken(from, to)
     const data = {from, message, time}
-    await messageModel.findOneAndUpdate({userToken : token}, {$push: {messages : data}}, {new : true})
     console.log(1)
+    await messageModel.findOneAdUpdate({userToken : token}, {$push: {messages : data}}, {new : true})
+    console.log(2)
 }
 
 const fetchMessages = async (io, sender, receiver) => {
