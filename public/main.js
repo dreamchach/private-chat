@@ -47,6 +47,7 @@ const socketConnect = async (username, userID) => {
 }
 
 const setActiveUser = (element, username, userID) => {
+    console.log('active-user')
     title.innerHTML = username
     title.setAttribute('userID', userID)
 
