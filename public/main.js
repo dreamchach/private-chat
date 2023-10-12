@@ -54,17 +54,20 @@ const setActiveUser = (element, username, userID) => {
     for(let i = 0; i < lists.length; i += 1) {
         lists[i].classList.remove('table-active')
     }
-    console.log('activeUser')
 
     element.classList.add('table-active')
-    
+    console.log(1)
     msgDiv.classList.remove('d-none')
+    console.log(2)
     messages.classList.remove('d-none')
+    console.log(3)
     messages.innerHTML = ''
+    console.log(4)
     socket.emit('fetch-messages', {receiver : userID})
-    
+    console.log(5)
     const notify = document.getElementById(userID)
     notify.classList.add('d-none')
+    console.log(6)
 }
 
 const appendMessage = ({message, time, backgroundColor, position}) => {
