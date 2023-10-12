@@ -66,18 +66,13 @@ const setActiveUser = (element, username, userID) => {
 
 const appendMessage = ({message, time, backgroundColor, position}) => {
     let div = document.createElement('div')
-    console.log(1)
     div.classList.add('message', 'bg-opacity-25', 'm-2', 'px-2', 'py-1', backgroundColor, position)
-    console.log(2)
     div.innerHTML = `
         <span class='msg-text'>${message}</span>
         <span class='msg-time'>${time}</span>
     `
-    console.log(3)
     messages.append(div)
-    console.log(4)
     messages.scrollTo(0, messages.scrollHeight)
-    console.log(5)
 }
 
 socket.on('users-data', ({users}) => {
@@ -155,16 +150,19 @@ msgForm.addEventListener('submit', (event) => {
         message : message.value,
         time
     }
-    
+    console.log(1)
     socket.emit('message-to-server', payload)
-    
+    console.log(2)
     appendMessage({
         ...payload,
         backgroundColor : 'bg-success',
         position : 'right'
     })
+    console.log(3)
     message.value = ''
+    console.log(4)
     message.focus()
+    console.log(5)
 })
 
 socket.on('message-to-client', ({from, message, time}) => {
