@@ -47,7 +47,6 @@ const socketConnect = async (username, userID) => {
 }
 
 const setActiveUser = (element, username, userID) => {
-    console.log('active-user')
     title.innerHTML = username
     title.setAttribute('userID', userID)
 
@@ -55,6 +54,7 @@ const setActiveUser = (element, username, userID) => {
     for(let i = 0; i < lists.length; i += 1) {
         lists[i].classList.remove('table-active')
     }
+    console.log('activeUser')
 
     element.classList.add('table-active')
     
