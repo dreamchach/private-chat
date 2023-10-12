@@ -16,29 +16,9 @@ app.use(express.json())
 const env = require('dotenv')
 env.config()
 
-mongoose.connect(process.env.mongoDB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    user : process.env.userName,
-    pass : process.env.userPass
-})
-const db = mongoose.connection
-db.once('open', async () => {
-    console.log('mongoDB is ready')
-    const adminDb = db.db.admin();
-
-    try {
-        await adminDb.authenticate(process.env.adminName, process.env.adminPassword);
-        console.log('관리자로 인증되었습니다.');
-
-      const cfg = await adminDb.command({ replSetGetConfig: 1 });
-      cfg.settings = { getLastErrorDefaults: { w: "majority", wtimeout: 0 } };
-      await adminDb.command({ replSetReconfig: cfg });
-      console.log('ReplSet 구성이 변경되었습니다.');
-    } catch (error) {
-      console.error('ReplSet 구성 변경 중 오류가 발생했습니다:', error);
-    }
-})
+mongoose.connect(process.env.mongoDB_URI)
+    .then (() => console.log('MongoDB is ready'))
+    .catch((error) => console.log(error))
 
 const randomId = () => {
     return crypto.randomBytes(8).toString('hex')
