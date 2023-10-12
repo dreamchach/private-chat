@@ -5,9 +5,6 @@ const crypto = require('crypto')
 const http = require('http')
 const {Server} = require('socket.io')
 const mongoose = require('mongoose')
-const cfg = rs.conf();
-cfg.settings = { getLastErrorDefaults: { w: "majority", wtimeout: 0 } };
-rs.reconfig(cfg);
 
 const server = http.createServer(app)
 const io = new Server(server)
@@ -19,7 +16,12 @@ app.use(express.json())
 const env = require('dotenv')
 env.config()
 mongoose.connect(process.env.mongoDB_URI)
-    .then(() => console.log('mongoDB is ready'))
+    .then(() => {
+        console.log('mongoDB is ready')
+        const cfg = db.admin().replSetGetConfig();
+        cfg.settings = { getLastErrorDefaults: { w: "majority", wtimeout: 0 } };
+        db.admin().replSetReconfig(cfg);
+    })
     .catch((error) => console.log(error))
 
 const randomId = () => {
