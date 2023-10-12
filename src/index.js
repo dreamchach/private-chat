@@ -21,11 +21,19 @@ mongoose.connect(process.env.mongoDB_URI, {
     useUnifiedTopology: true
 })
 const db = mongoose.connection
-db.once('open', () => {
+db.once('open', async () => {
     console.log('mongoDB is ready')
-    const cfg = db.admin().replSetGetConfig();
-    cfg.settings = { getLastErrorDefaults: { w: "majority", wtimeout: 0 } };
-    db.admin().replSetReconfig(cfg);
+    console.log(db)
+    const adminDb = db.db.admin();
+
+    try {
+      const cfg = await adminDb.command({ replSetGetConfig: 1 });
+      cfg.settings = { getLastErrorDefaults: { w: "majority", wtimeout: 0 } };
+      await adminDb.command({ replSetReconfig: cfg });
+      console.log('ReplSet 구성이 변경되었습니다.');
+    } catch (error) {
+      console.error('ReplSet 구성 변경 중 오류가 발생했습니다:', error);
+    }
 })
 
 const randomId = () => {
