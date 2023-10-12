@@ -23,7 +23,6 @@ mongoose.connect(process.env.mongoDB_URI, {
 const db = mongoose.connection
 db.once('open', async () => {
     console.log('mongoDB is ready')
-    console.log(db)
     const adminDb = db.db.admin();
 
     try {
