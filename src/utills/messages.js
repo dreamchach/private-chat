@@ -8,7 +8,6 @@ const getToken = (sender, receiver) => {
 const saveMessages = async({from, to, message, time}) => {
     const token = getToken(from, to)
     const data = {from, message, time}
-    console.log(1)
     const res = await messageModel.findOneAndUpdate({userToken : token}, {$push: {messages : data}})
     console.log(2, res)
 }
