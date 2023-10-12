@@ -56,6 +56,7 @@ io.on('connection', async (socket) => {
     io.emit('users-data', {users})
     
     socket.on('message-to-server', (payload) => {
+        console.log('payload')
         io.to(payload.to).emit('message-to-client', payload)
         saveMessages(payload)    
     })        

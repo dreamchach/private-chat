@@ -150,19 +150,14 @@ msgForm.addEventListener('submit', (event) => {
         message : message.value,
         time
     }
-    console.log(1)
     socket.emit('message-to-server', payload)
-    console.log(2)
     appendMessage({
         ...payload,
         backgroundColor : 'bg-success',
         position : 'right'
     })
-    console.log(3)
     message.value = ''
-    console.log(4)
     message.focus()
-    console.log(5)
 })
 
 socket.on('message-to-client', ({from, message, time}) => {
