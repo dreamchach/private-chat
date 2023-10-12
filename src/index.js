@@ -26,6 +26,9 @@ db.once('open', async () => {
     const adminDb = db.db.admin();
 
     try {
+        await adminDb.authenticate(process.env.adminName, process.env.adminPassword);
+        console.log('관리자로 인증되었습니다.');
+
       const cfg = await adminDb.command({ replSetGetConfig: 1 });
       cfg.settings = { getLastErrorDefaults: { w: "majority", wtimeout: 0 } };
       await adminDb.command({ replSetReconfig: cfg });
