@@ -18,7 +18,9 @@ env.config()
 
 mongoose.connect(process.env.mongoDB_URI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    user : process.env.userName,
+    pass : process.env.userPass
 })
 const db = mongoose.connection
 db.once('open', async () => {
