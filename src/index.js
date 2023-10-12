@@ -15,14 +15,18 @@ app.use(express.json())
 
 const env = require('dotenv')
 env.config()
-mongoose.connect(process.env.mongoDB_URI)
-    .then(() => {
-        console.log('mongoDB is ready')
-        const cfg = db.admin().replSetGetConfig();
-        cfg.settings = { getLastErrorDefaults: { w: "majority", wtimeout: 0 } };
-        db.admin().replSetReconfig(cfg);
-    })
-    .catch((error) => console.log(error))
+
+mongoose.connect(process.env.mongoDB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+const db = mongoose.connection
+db.once('open', () => {
+    console.log('mongoDB is ready')
+    const cfg = db.admin().replSetGetConfig();
+    cfg.settings = { getLastErrorDefaults: { w: "majority", wtimeout: 0 } };
+    db.admin().replSetReconfig(cfg);
+})
 
 const randomId = () => {
     return crypto.randomBytes(8).toString('hex')
