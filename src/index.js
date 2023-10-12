@@ -5,22 +5,6 @@ const crypto = require('crypto')
 const http = require('http')
 const {Server} = require('socket.io')
 const mongoose = require('mongoose')
-const MongoClient = require('mongodb').MongoClient;
-
-const url = 'mongodb://localhost:27017';
-const dbName = 'myDatabase';
-
-MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
-  if (err) throw err;
-  const db = client.db(dbName);
-
-  db.command({ getLastError: 1 }, (err, result) => {
-    if (err) throw err;
-    console.log(result.writeConcern);
-    client.close();
-  });
-});
-
 
 const server = http.createServer(app)
 const io = new Server(server)
