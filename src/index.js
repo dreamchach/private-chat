@@ -57,9 +57,7 @@ io.on('connection', async (socket) => {
     
     socket.on('message-to-server', (payload) => {
         io.to(payload.to).emit('message-to-client', payload)
-        console.log('payload')
-        saveMessages(payload)
-        console.log(2)    
+        saveMessages(payload)   
     })        
     socket.on('fetch-messages', ({receiver}) => {
         fetchMessages(io, socket.id, receiver)  
