@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const socketConnect = async () => {
       await axios.get('/api/socket')
-      setSocket(io({autoConnect : false}))
+      setSocket(io('https://private-chat-git-newnext-dreamchach.vercel.app/api/socket', {autoConnect : false}))
     }
     socketConnect()
 
