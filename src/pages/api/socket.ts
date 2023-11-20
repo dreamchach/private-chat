@@ -1,53 +1,56 @@
-import { fetchMessages, saveMessages } from '@/utill/functions/functions'
-import { IUserData, IUsers } from '@/utill/types/api'
-import { Server } from 'socket.io'
+import connect from "@/lib/dbConnect"
+// import messageModel from "@/model/message"
+import { fetchMessage, getToken, saveMessage } from "@/utill/functions/api"
+import { Server } from "socket.io"
 
-export default function SocketHandler(req : any, res : any) {
-    if(res.socket.server.io) {
-        console.log('now binding...')
-        res.end()
-        return
-    }
-    
+let users : any = []
+
+export default function SocketHandler(req : any , res : any) {
+  connect()
+
+  if(res.socket.server.io) {
+    console.log('now binding...')
+
+    res.socket.server.io.use((socket : any, next : any) => {
+      console.log('binding socket middleware')
+
+      next()
+    })
+
+  }else {
     const io = new Server(res.socket.server)
-    let users : IUsers[] = []
 
-    io.use((socket, next) => {
-        const username = socket.handshake.auth.username
-    
-        if(!username) return next(new Error('허용되지 않는 이름입니다'))
-    
-        next()
+    io.use((socket : any, next) => {
+      console.log('socket middleware')
+      socket.id = socket.handshake.auth.userId
+      users.push(socket.handshake.auth)
+
+      next()
     })
 
     io.on('connection', async (socket) => {
-        const auth = socket.handshake.auth
-        users.push(auth as IUserData)
-        console.log('socket connected')
+      console.log('socket connect')
 
+      io.emit('users-data', {users})
+
+      socket.on('message-to-server', (payload) => {
+        io.to(payload.to).emit('message-to-client', payload)
+
+        saveMessage(payload)
+      })
+
+      socket.on('fetch-messages', ({to}) => {
+        fetchMessage(socket, to, io)
+      })
+
+      socket.on('disconnect', () => {
+        users = users.filter((user : any) => user.userId !== socket.handshake.auth.userId)
         io.emit('users-data', {users})
         
-        socket.on('joinRoom', (roomId) => {
-            socket.join(roomId)
-            console.log('roomId', roomId)
-        })
-    
-        socket.on('message-to-server', (payload) => {
-            io.to(payload.to).emit('message-to-client', payload)
-            saveMessages(payload)   
-        })        
-        socket.on('fetch-messages', ({receiver}) => {
-            fetchMessages(io, socket.id, receiver)  
-        })
-        socket.on('disconnect', () => {
-            users = users.filter((user) => user.userID !== socket.id)
-    
-            io.emit('users-data', {users})
-            io.emit('user-away', socket.id)
-            console.log('socket disconnect')
-        }) 
+        console.log('disconnect')
+      })
     })
-    
     res.socket.server.io = io
-    res.end()
+  }
+  res.end()
 }

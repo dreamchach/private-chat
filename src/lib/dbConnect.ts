@@ -7,15 +7,18 @@ declare global {
 let cached = global.mongoose
 
 if(!cached) {
-    cached = {conn : null, promise : null}
+    cached = global.mongoose = {conn : null, promise : null}
 }
 
-const connect = async () => {
+async function connect () {
     if(cached.conn) {
         return cached.conn
     }
     if(!cached.promise) {
-        cached.promise = await mongoose.connect(process.env.NEXT_PUBLIC_MONGODB_URI as string)
+        const opts = {
+            bufferCommands: false,
+        }
+        cached.promise = await mongoose.connect(process.env.NEXT_PUBLIC_MONGODB_URI as string, opts)
         .then((mongoose) => mongoose)
     }
 

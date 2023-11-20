@@ -1,13 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { avatarLists } from "../array/avatarList";
-import axios from "axios";
-
-export const setUserId = createAsyncThunk('auth/setUserId', async (value : any) => {
-  const res = await axios.post('/api/session', {
-    username : value
-  })
-  return res.data
-})
+import { createSlice } from "@reduxjs/toolkit"
+import { avatarLists } from "../array/avatarList"
 
 export const authSlice = createSlice({
     name : 'auth',
@@ -15,10 +7,10 @@ export const authSlice = createSlice({
       nickName : '',
       color : ["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"],
       avatar : 'Mary Baker',
-      userId : ''
+      userId : '',
     },
     reducers : {
-      randomColor : (state) => {
+      randomColor : (state : any) => {
         let colors : string[] = []
         for(let i = 0; colors.length < 5; i += 1) {
           let hex = '#'
@@ -36,15 +28,17 @@ export const authSlice = createSlice({
       },
       setNickName : (state, action) => {
         state.nickName = action.payload
+      },
+      setUserId : (state, action) => {
+        state.userId = action.payload
+      },
+      removeUser : (state) => {
+        state.nickName = ''
+        state.userId = ''
       }
     },
-    extraReducers : (builder) => {
-      builder.addCase(setUserId.fulfilled, (state, action) => {
-        state.userId = action.payload.userID
-      })
-    }
 })
 
-export const {randomColor, randomAvatar, setNickName} = authSlice.actions
+export const {randomColor, randomAvatar, setNickName, setUserId, removeUser} = authSlice.actions
 
 export default authSlice.reducer

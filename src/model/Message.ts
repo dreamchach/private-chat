@@ -17,9 +17,12 @@ const messageSchema = new mongoose.Schema({
         time : {
             type : String,
             require : true
+        },
+        to : {
+            type : String,
+            require : true
         }
     }]
 })
 
-const messageModel = mongoose.model('Message', messageSchema)
-export default messageModel
+export default mongoose.models.Message || mongoose.model('Message', messageSchema)
