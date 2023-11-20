@@ -1,16 +1,14 @@
-import messageModel from "@/model/message"
-
 export const getToken = (sender : string, receiver : string) => {
     const key = [sender, receiver].sort().join('_')
     return key
 }
 
-export const saveMessage = async (payload : any) => {
+export const saveMessage = async (payload : any, messageModel : any) => {
     const token = getToken(payload.from, payload.to)
     await messageModel.findOneAndUpdate({userToken : token}, {$push: {messages : payload}})    
 }
 
-export const fetchMessage = async (socket : any, to : any, io : any) => {
+export const fetchMessage = async (socket : any, to : any, io : any, messageModel : any) => {
     const token = getToken(socket.id, to)
     const foundToken = await messageModel.findOne({userToken : token})
 

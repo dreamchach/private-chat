@@ -1,5 +1,5 @@
 import connect from "@/lib/dbConnect"
-// import messageModel from "@/model/message"
+import messageModel from "@/model/message"
 import { fetchMessage, getToken, saveMessage } from "@/utill/functions/api"
 import { Server } from "socket.io"
 
@@ -36,11 +36,11 @@ export default function SocketHandler(req : any , res : any) {
       socket.on('message-to-server', (payload) => {
         io.to(payload.to).emit('message-to-client', payload)
 
-        saveMessage(payload)
+        saveMessage(payload, messageModel)
       })
 
       socket.on('fetch-messages', ({to}) => {
-        fetchMessage(socket, to, io)
+        fetchMessage(socket, to, io, messageModel)
       })
 
       socket.on('disconnect', () => {
