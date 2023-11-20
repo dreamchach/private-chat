@@ -8,20 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors : {
-        'basic-green' : '#4be5b7',
-        'hover-green' : '#23c393',
-        'blow-green' : '#8fefd4',
-        'none-button' : '#f5f5f5',
-        'none-text' : '#cbcbcb',
-        'buble-yellow' : '#ffdf9e'
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic':
+          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
-      minWidth : {
-        '300' : '300px'
-      },
-      width : {
-        '300' : '300px'
-      }
     },
   },
   plugins: [],
