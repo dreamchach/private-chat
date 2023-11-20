@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     const socketConnect = async () => {
       await axios.get('/api/socket')
-      socket = io()
+      socket = io('http://localhost:3000/api/socket')
     }
     socketConnect()
 
