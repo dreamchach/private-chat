@@ -25,4 +25,5 @@ const messageSchema = new mongoose.Schema({
     }]
 })
 
-export default mongoose.models.Message || mongoose.model('Message', messageSchema)
+const messageModel = mongoose.models.Message || mongoose.model('Message', messageSchema)
+export default messageModel

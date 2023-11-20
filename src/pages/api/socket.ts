@@ -1,7 +1,7 @@
 import connect from "@/lib/dbConnect"
+import messageModel from "@/model/message"
 import { getToken } from "@/utill/functions/api"
 import { Server } from "socket.io"
-import messageModel from '@/model/message'
 
 let users : any = []
 
