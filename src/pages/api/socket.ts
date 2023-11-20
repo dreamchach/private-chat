@@ -1,7 +1,7 @@
 import connect from "@/lib/dbConnect"
-import messageModel from "@/model/message"
-import { fetchMessage, getToken, saveMessage } from "@/utill/functions/api"
+import { getToken } from "@/utill/functions/api"
 import { Server } from "socket.io"
+import messageModel from '@/model/message'
 
 let users : any = []
 
@@ -36,11 +36,35 @@ export default function SocketHandler(req : any , res : any) {
       socket.on('message-to-server', (payload) => {
         io.to(payload.to).emit('message-to-client', payload)
 
-        saveMessage(payload, messageModel)
+        const saveMessage = async () => {
+          const token = getToken(payload.from, payload.to)
+          await messageModel.findOneAndUpdate({userToken : token}, {$push: {messages : payload}})    
+        }
+        saveMessage()
       })
 
       socket.on('fetch-messages', ({to}) => {
-        fetchMessage(socket, to, io, messageModel)
+        const fetchMessage = async () => {
+          const token = getToken(socket.id, to)
+          const foundToken = await messageModel.findOne({userToken : token})
+      
+          if(foundToken) {
+            console.log('token is found')
+            io.to(socket.id).emit('stored-messages', {messages : foundToken.messages})
+            io.to(to).emit('send-message', socket.id)
+          } else {
+            const data = {
+              userToken : token,
+              messages : []
+            }
+            const message = new messageModel(data)
+            const saveMessage = message.save()
+      
+            if(saveMessage) console.log('create message')
+            else console.log('creating message error')
+          }
+        }
+        fetchMessage()
       })
 
       socket.on('disconnect', () => {
