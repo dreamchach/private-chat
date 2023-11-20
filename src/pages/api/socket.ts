@@ -1,12 +1,40 @@
-import connect from "@/lib/dbConnect"
-// import messageModel from "@/model/message"
-import { fetchMessage, getToken, saveMessage } from "@/utill/functions/api"
+
+import { Server } from "socket.io"
+
+export default function SocketHandler(req : any, res : any) {
+  if(res.socket.server.io) {
+    console.log('now binding...')
+  }else {
+    const io = new Server(res.socket.server)
+
+    io.use((socket, next) => {
+      console.log('socket middleware')
+
+      next()
+    })
+
+    io.on('connection', async (socket) => {
+      console.log('socket connect')
+
+      socket.on('disconnect', () => {
+        console.log('disconnect')
+      })
+    })
+    res.socket.server.io = io
+  }
+  res.end()
+}
+
+/*
+import dbConnect from "@/lib/dbConnect"
+import MessageModel from "@/model/Message"
+import { getToken } from "@/utill/functions/api"
 import { Server } from "socket.io"
 
 let users : any = []
 
 export default function SocketHandler(req : any , res : any) {
-  connect()
+  dbConnect()
 
   if(res.socket.server.io) {
     console.log('now binding...')
@@ -35,12 +63,36 @@ export default function SocketHandler(req : any , res : any) {
 
       socket.on('message-to-server', (payload) => {
         io.to(payload.to).emit('message-to-client', payload)
-
-        saveMessage(payload)
+        
+        const saveMessage = async () => {
+          const token = getToken(payload.from, payload.to)
+          await MessageModel.findOneAndUpdate({userToken : token}, {$push: {messages : payload}})    
+        }
+        saveMessage()
       })
 
       socket.on('fetch-messages', ({to}) => {
-        fetchMessage(socket, to, io)
+        const fetchMessage = async () => {
+          const token = getToken(socket.id, to)
+          const foundToken = await MessageModel.findOne({userToken : token})
+      
+          if(foundToken) {
+            console.log('token is found')
+            io.to(socket.id).emit('stored-messages', {messages : foundToken.messages})
+            io.to(to).emit('send-message', socket.id)
+          } else {
+            const data = {
+              userToken : token,
+              messages : []
+            }
+            const message = new MessageModel(data)
+            const saveMessage = message.save()
+      
+            if(saveMessage) console.log('create message')
+            else console.log('creating message error')
+          }
+      }
+        fetchMessage()
       })
 
       socket.on('disconnect', () => {
@@ -54,3 +106,4 @@ export default function SocketHandler(req : any , res : any) {
   }
   res.end()
 }
+*/
