@@ -12,11 +12,8 @@ export default function App({ Component, pageProps }: AppProps) {
   const [socket, setSocket] = useState<any>()
   useEffect(() => {
     const socketConnect = async () => {
-      console.log(1)
       await axios.get('/api/socket')
-      console.log(2)
       setSocket(io({autoConnect : false}))
-      console.log(3)
     }
     socketConnect()
 
