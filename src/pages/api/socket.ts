@@ -18,7 +18,10 @@ export default function SocketHandler(req : any , res : any) {
     })
 
   }else {
-    const io = new Server(res.socket.server)
+    const io = new Server(res.socket.server, {
+      path : '/api/socket_io',
+      addTrailingSlash : false
+    })
 
     io.use((socket : any, next) => {
       console.log('socket middleware')

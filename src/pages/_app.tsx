@@ -13,7 +13,10 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const socketConnect = async () => {
       await axios.get('/api/socket')
-      setSocket(io({autoConnect : false}))
+      setSocket(io(undefined as any, {
+        autoConnect : false,
+        path : '/api/socket_io'
+      }))
     }
     socketConnect()
 
