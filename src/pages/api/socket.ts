@@ -19,8 +19,8 @@ export default function SocketHandler(req : any , res : any) {
 
   }else {
     const io = new Server(res.socket.server, {
-      path : '/api/socket_io',
-      addTrailingSlash : false
+      path : '/api/socket',
+      //addTrailingSlash : false
     })
 
     io.use((socket : any, next) => {
