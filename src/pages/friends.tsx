@@ -18,10 +18,7 @@ const Friends = ({socket} : any) => {
     const dispatch = useDispatch()
     
     useEffect(() => {
-        console.log(1)
-        console.log(socket)
         socketConnect(socket, auth, setFriends, dispatch)
-        console.log(2)
     }, [socket])
 
   return (

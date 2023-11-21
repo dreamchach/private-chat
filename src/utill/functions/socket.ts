@@ -2,10 +2,13 @@ import { input } from "../redux/waitSlice"
 
 export const socketConnect = async (socket : any, auth : any, setFriends : any, dispatch : any) => {
     if(socket) {
+        console.log(1)
         socket.disconnect()
+        console.log(2)
         await socket.connect()
+        console.log(3)
         socket.auth = auth
-        console.log(socket.auth)
+        console.log(4)
         
         socket.on('users-data', ({users} : any) => {
             const notMe = users.filter((user : any) => {
@@ -14,11 +17,13 @@ export const socketConnect = async (socket : any, auth : any, setFriends : any, 
             })
             setFriends(notMe)
         })
+        console.log(5)
 
         socket?.on('send-message', (to : any) => {
             dispatch(input(to))
             console.log('to', to)
         })
+        console.log(6)
     }
 }
 
