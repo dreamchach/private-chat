@@ -12,10 +12,10 @@ export default function App({ Component, pageProps }: AppProps) {
   const [socket, setSocket] = useState<any>()
   useEffect(() => {
     const socketConnect = async () => {
-      //await axios.get('/api/socket')
-      setSocket(io('https://private-chat-hkqdztns2-dreamchach.vercel.app', {
-        autoConnect : false,
-        path : '/api/socket'
+      await axios.get('/api/socket')
+      setSocket(io({
+        //autoConnect : false,
+        path : '/api/socket_io'
       }))
     }
     socketConnect()
