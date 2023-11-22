@@ -24,7 +24,7 @@ export default function Home() {
   */
   const socketInitializer = async () => {
     await axios.get('/api/socket')
-    socket = io('https://private-chat-git-deployerror-dreamchach.vercel.app/')
+    socket = io('https://private-chat-git-deployerror-dreamchach.vercel.app/api/socket')
 
     socket.on('connect', () => {
       console.log('connected')
