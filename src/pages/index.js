@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
 import io from 'socket.io-client'
-//import Other from '@/components/Other'
+import Other from '@/components/Other'
 import axios from 'axios'
 
 export default function Home() {
   const [connected, setConnected] = useState(false)
-  //const [chat, setChat] = useState([])
-  //const [message, setMessage] = useState('')
+  const [chat, setChat] = useState([])
+  const [message, setMessage] = useState('')
   let socket
-  //const user = 'User_' + String(new Date().getTime()).substr(-3);
+  const user = 'User_' + String(new Date().getTime()).substr(-3);
 
-  /*
+  
   const sendMessage = async () => {
     if(message) {
       const messageObj = {
@@ -21,7 +21,7 @@ export default function Home() {
       if(res.status === 201) setMessage('')
     }
   }
-  */
+  
   const socketInitializer = async () => {
     await axios.get('/api/socket')
     socket = io('https://private-chat-git-deployerror-dreamchach.vercel.app', {path : '/api/socket'})
@@ -30,7 +30,7 @@ export default function Home() {
       console.log('connected')
       setConnected(true)
     })
-    /*
+    
     socket.on('error', (error) => {
       console.log('error')
     })
@@ -38,7 +38,7 @@ export default function Home() {
       chat.push(message)
       setChat([...chat])
     })
-    */
+    
   }
   
   useEffect(() => {
@@ -55,14 +55,7 @@ export default function Home() {
   return (
     <>
       <main>
-    main
-      </main>
-    </>
-  )
-}
-
-/*
-        {chat.map((chat, i) => (
+      {chat.map((chat, i) => (
           <div key={i}>
               <Other user={chat.user} message={chat.message} />
           </div>
@@ -77,4 +70,7 @@ export default function Home() {
             if(event.key === 'Enter') sendMessage()
           }}
         />
-*/
+      </main>
+    </>
+  )
+}
