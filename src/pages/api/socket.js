@@ -6,7 +6,7 @@ export default function SocketHandler(req, res) {
   if(res.socket.server.io) {
     console.log('now binding...')
   }else {
-    const io = new Server(res.socket.server)
+    const io = new Server(res.socket.server, {path : '/api/socket/'})
 
     io.use((socket, next) => {
       console.log('socket middleware')
