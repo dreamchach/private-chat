@@ -26,7 +26,7 @@ export default function Home() {
     await axios.get('/api/socket')
     const address = 'https://private-chat-git-deployerror-dreamchach.vercel.app'
     //socket = io('http://localhost:3000', {path : '/socket.io', autoConnect : false})
-    socket = io(address, {path : '/api/socket', autoConnect : false})
+    socket = io(address, {path : '/api/socket/socket.io', autoConnect : false})
     //socket.connected = true
     //socket = io({autoConnect : false})
     
