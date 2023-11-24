@@ -13,10 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const socketConnect = async () => {
       //await axios.get('/api/socket')
-      setSocket(io('https://private-chat-hkqdztns2-dreamchach.vercel.app', {
-        autoConnect : false,
-        path : '/api/socket'
-      }))
+      setSocket(io('https://port-0-private-chat-koh2xlj3ufoqd.sel4.cloudtype.app', {autoConnect : false}))
     }
     socketConnect()
 
