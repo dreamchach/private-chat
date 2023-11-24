@@ -1,43 +1,55 @@
-import RandomAvatar from '@/components/index/RandomAvatar'
-import { onRandom } from '@/utill/functions/function'
-import { onclick, pressEnter } from '@/utill/functions/link'
-import axios from 'axios'
-import { useRouter } from 'next/router'
+import { input, output } from '@/utill/redux/waitSlice'
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import AboutFriends from '@/components/friends/AboutFriends'
+import axios from 'axios'
 import { io } from 'socket.io-client'
+import FriendsHeader from '@/components/friends/FriendsHeader'
+import AboutMe from '@/components/friends/AboutMe'
 
-const Index = () => {
-  const router = useRouter()
+export default function Home() {
+  const [friends, setFriends] = useState<any>([])
   const auth = useSelector((state : any) => {
-    return state.auth
+      return state.auth
   })
-  const [name, setName] = useState(auth.nickName)
+  const wait = useSelector((state : any) => {
+      return state.wait
+  })
   const dispatch = useDispatch()
-
+  
   let socket : any
-
+  
   const socketInitializer = async () => {
     await axios.get('/api/socket')
     socket = io()
+    socket.auth = auth
 
     socket.on('connect', () => {
       console.log('connected')
     })
+
+    socket.on('users-data', ({users} : any) => {
+      const notMe = users.filter((user : any) => {
+        const answer = user.userId !== auth.userId
+        return answer
+      })
+      setFriends(notMe)
+    })
+/*
+    socket.on('send-message', (to : any) => {
+      dispatch(input(to))
+      console.log('to', to)
+    })
+*/
     socket.on('error', (error : any) => {
       console.log('error')
     })
   }
-
+  
   useEffect(() => {
     socketInitializer()
-
-    if(auth.userId !== '') {
-      router.push('/friends')
-    }else {
-      onRandom(dispatch)
-    }
-
+  
     return () => {
       if(socket) {
         socket.disconnect()
@@ -46,24 +58,30 @@ const Index = () => {
   }, [])
 
   return (
-    <section className="h-screen w-screen flex flex-col items-center justify-center bg-basic-green gap-y-5">
-      <RandomAvatar auth={auth} dispatch={dispatch} />
-      <input 
-        value={name} 
-        onChange={(event) => setName(event?.target.value)} 
-        placeholder="사용할 닉네임을 적어주세요"
-        onKeyUp={(event) => pressEnter(event.key, name, router, dispatch)}
-        className="box-border mx-14 my-0 w-300 py-2.5 px-5 rounded-xl outline-0 min-w-300"
-      />
-      <button 
-        onClick={() => onclick(name, router, dispatch)}
-        disabled={name === '' ? true : false}
-        className={`${name === '' ? 'bg-none-button text-none-text' : 'bg-white hover:bg-hover-green hover:border-white hover:shadow-xl hover:text-white'} box-border mx-14 my-0 w-300 py-2.5 px-5 rounded-xl border-2 shadow border-black min-w-300`}
-      >
-        입장
-      </button>
-  </section>
+    <div>
+        <FriendsHeader dispatch={dispatch} />
+        <AboutMe auth={auth} />
+        <div className='mx-14 mt-14 flex items-center justify-center text-sm text-none-text font-bold'>접속한 유저</div>
+        {friends.length > 0 ? 
+            friends.map((friend : any) => (
+                <Link 
+                    href={{
+                        pathname : `/chat/${auth.userId}-${friend.userId}`,
+                        query : {
+                            friendUserId : friend.userId,
+                            friendNickname : friend.nickName,
+                            friendAvatar : friend.avatar,
+                            friendColor : friend.color,
+                        }
+                    }} 
+                    key={friend.userId}
+                    onClick={() => dispatch(output(friend.userId))}
+                >
+                    <AboutFriends friend={friend} wait={wait} />
+                </Link>
+            )) : 
+            <div className='mt-14 flex items-center justify-center text-sm text-none-text font-bold'>접속 중인 유저 없음</div>
+        }
+    </div>
   )
 }
-
-export default Index
