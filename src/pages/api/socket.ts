@@ -13,15 +13,15 @@ export default function handler(req: any, res: any) {
 
     io.use((socket : any, next) => {
       console.log('socket middleware')
-      socket.id = socket.handshake.auth.userId
-      users.push(socket.handshake.auth)
+      //socket.id = socket.handshake.auth.userId
+      //users.push(socket.handshake.auth)
 
       next()
     })
 
     io.on('connection', async (socket) => {
       console.log('socket connect')
-
+/*
       io.emit('users-data', {users})
 
       socket.on('message-to-server', (payload) => {
@@ -33,10 +33,10 @@ export default function handler(req: any, res: any) {
       socket.on('fetch-messages', ({to}) => {
         //fetchMessage(socket, to, io)
       })
-
+*/
       socket.on('disconnect', () => {
-        users = users.filter((user : any) => user.userId !== socket.handshake.auth.userId)
-        io.emit('users-data', {users})
+        //users = users.filter((user : any) => user.userId !== socket.handshake.auth.userId)
+        //io.emit('users-data', {users})
         
         console.log('disconnect')
       })
