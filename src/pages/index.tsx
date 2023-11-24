@@ -15,16 +15,8 @@ const Index = () => {
   const [name, setName] = useState(auth.nickName)
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    if(auth.userId !== '') {
-      router.push('/friends')
-    }else {
-      onRandom(dispatch)
-    }
-  }, [])
-
   let socket : any
-  
+
   const socketInitializer = async () => {
     await axios.get('/api/socket')
     socket = io()
@@ -36,10 +28,16 @@ const Index = () => {
       console.log('error')
     })
   }
-  
+
   useEffect(() => {
     socketInitializer()
-  
+
+    if(auth.userId !== '') {
+      router.push('/friends')
+    }else {
+      onRandom(dispatch)
+    }
+
     return () => {
       if(socket) {
         socket.disconnect()
