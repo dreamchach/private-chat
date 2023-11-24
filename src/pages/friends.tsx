@@ -1,12 +1,13 @@
-import { input, output } from '@/utill/redux/waitSlice'
+import { output } from '@/utill/redux/waitSlice'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import AboutFriends from '@/components/friends/AboutFriends'
 import axios from 'axios'
 import { io } from 'socket.io-client'
 import FriendsHeader from '@/components/friends/FriendsHeader'
 import AboutMe from '@/components/friends/AboutMe'
+import { useRouter } from 'next/router'
 
 export default function Home() {
   const [friends, setFriends] = useState<any>([])
@@ -17,6 +18,7 @@ export default function Home() {
       return state.wait
   })
   const dispatch = useDispatch()
+  const router = useRouter()
   
   let socket : any
   
@@ -48,7 +50,9 @@ export default function Home() {
   }
   
   useEffect(() => {
-    socketInitializer()
+    if(auth.id !== '') {
+      socketInitializer()
+    }else router.push('/')
   
     return () => {
       if(socket) {
