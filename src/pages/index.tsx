@@ -1,32 +1,21 @@
-import { useEffect, useState } from 'react'
-import io from 'socket.io-client'
-import axios from 'axios'
+import { useEffect } from 'react'
 
-export default function Home() {
-  let socket : any
-
-  const socketInitializer = async () => {
-    await axios.get('/api/socket')
-    socket = io()
-
-    socket.on('connect', () => {
-      console.log('connected')
-    })
-    socket.on('error', (error : any) => {
-      console.log('error')
-    })
-  }
-  
+export default function Home({socket} : any) {
   useEffect(() => {
-    socketInitializer()
-  
-    return () => {
+    const socketConnect = () => {
       if(socket) {
-        socket.disconnect()
-      }
+        socket.on('connect', () => {
+          console.log('connected')
+        })
+        socket.on('error', (error : any) => {
+          console.log('error')
+        })
+      }      
     }
-  }, [])
-
+    socketConnect()
+    
+  }, [socket])
+  
   return (
     <main>main</main>
   )
