@@ -1,9 +1,11 @@
 import RandomAvatar from '@/components/index/RandomAvatar'
 import { onRandom } from '@/utill/functions/function'
 import { onclick, pressEnter } from '@/utill/functions/link'
+import axios from 'axios'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { io } from 'socket.io-client'
 
 const Index = () => {
   const router = useRouter()
@@ -18,6 +20,30 @@ const Index = () => {
       router.push('/friends')
     }else {
       onRandom(dispatch)
+    }
+  }, [])
+
+  let socket : any
+  
+  const socketInitializer = async () => {
+    await axios.get('/api/socket')
+    socket = io()
+
+    socket.on('connect', () => {
+      console.log('connected')
+    })
+    socket.on('error', (error : any) => {
+      console.log('error')
+    })
+  }
+  
+  useEffect(() => {
+    socketInitializer()
+  
+    return () => {
+      if(socket) {
+        socket.disconnect()
+      }
     }
   }, [])
 
