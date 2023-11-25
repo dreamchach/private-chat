@@ -18,6 +18,9 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
     }
 
     const inputEnter = async (event : any) => {
+        console.log(event.key)
+        console.log(message)
+        console.log(socket)
         if(event.key === 'Enter' && !!socket && message !== '') {
             console.log(payload)
             await socket.emit('fetch-messages', {to : router.query.friendUserId})
