@@ -39,7 +39,7 @@ export default function Home() {
       setFriends(notMe)
     })
 
-    socket.on('send-message', (to : any) => {
+    socket.on('fetch-messages', (to : any) => {
       dispatch(input(to))
       console.log('to', to)
     })
