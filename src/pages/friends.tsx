@@ -50,7 +50,6 @@ export default function Home() {
   }
   
   useEffect(() => {
-    console.log(auth)
     if(auth.id !== '' && auth.nickName !== '') {
       socketInitializer()
     }else router.push('/')
