@@ -1,4 +1,4 @@
-import { output } from '@/utill/redux/waitSlice'
+import { input, output } from '@/utill/redux/waitSlice'
 import Link from 'next/link'
 import React, { useEffect, useReducer, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
@@ -38,12 +38,12 @@ export default function Home() {
       })
       setFriends(notMe)
     })
-/*
+
     socket.on('send-message', (to : any) => {
       dispatch(input(to))
       console.log('to', to)
     })
-*/
+
     socket.on('error', (error : any) => {
       console.log('error')
     })
