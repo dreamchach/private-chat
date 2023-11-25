@@ -43,6 +43,7 @@ export default function Home() {
     socket.on('fetch-messages', (to : any) => {
       dispatch(input(to))
       console.log('to', to)
+      console.log('authID', auth.userId)
     })
 
     socket.on('error', (error : any) => {
