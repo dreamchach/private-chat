@@ -66,7 +66,6 @@ const Chat = () => {
     useEffect(() => {
         window.scrollTo(0, document.body.scrollHeight)
     }, [chat])
-    console.log(socket)
    
   return (
     <div>
