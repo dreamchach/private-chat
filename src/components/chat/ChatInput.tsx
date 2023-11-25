@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React from 'react'
 
 const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : any) => {
@@ -21,11 +22,12 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
         console.log(event.key)
         console.log(message)
         console.log(socket)
-        if(event.key === 'Enter' && !!socket && message !== '') {
+        if(event.key === 'Enter' && message !== '') {
             console.log(payload)
-            await socket.emit('fetch-messages', {to : router.query.friendUserId})
-            await socket.emit('message-to-server', payload)
-            await setChat([...chat, payload])
+            const res = await axios.post('/api/chat', {to : router.query.friendUserId})
+            console.log(res)
+            //await socket.emit('message-to-server', payload)
+            //await setChat([...chat, payload])
             setMessage('')
         }
     }

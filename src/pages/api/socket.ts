@@ -24,7 +24,7 @@ export default function handler(req: any, res: any) {
       console.log('socket connect')
 
       io.emit('users-data', {users})
-/*
+
       socket.on('message-to-server', (payload) => {
         io.to(payload.to).emit('message-to-client', payload)
 
@@ -59,7 +59,7 @@ export default function handler(req: any, res: any) {
         }
         saveMessage()
       })
-*/
+
       socket.on('disconnect', () => {
         users = users.filter((user : any) => user.userId !== socket.handshake.auth.userId)
         io.emit('users-data', {users})
