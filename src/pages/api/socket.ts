@@ -32,6 +32,7 @@ export default function handler(req: any, res: any) {
       })
 
       socket.on('fetch-messages', ({to}) => {
+        console.log(to)
         const saveMessage = async () => {
           const getToken = (sender : string, receiver : string) => {
             const key = [sender, receiver].sort().join('_')
