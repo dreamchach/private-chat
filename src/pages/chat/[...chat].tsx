@@ -33,7 +33,6 @@ const Chat = () => {
          const copyChat = [...chat, payload]
          setChat(copyChat)
      })
-     socket.emit('fetch-messages', {to : router.query.friendUserId})
 
      socket.on('message-to-client', (payload : any) => {
         const copyChat = [...chat, payload]
