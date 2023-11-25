@@ -1,6 +1,6 @@
 import { input, output } from '@/utill/redux/waitSlice'
 import Link from 'next/link'
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import AboutFriends from '@/components/friends/AboutFriends'
 import axios from 'axios'
@@ -17,6 +17,7 @@ export default function Home() {
   const wait = useSelector((state : any) => {
       return state.wait
   })
+  console.log('page', wait)
   const dispatch = useDispatch()
   const router = useRouter()
   
