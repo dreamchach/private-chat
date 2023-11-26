@@ -35,8 +35,11 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
             await setChat([...chat, payload])
             await setMessage('')
             await setDouble(false)
-            console.log(input)
-            await input.current.focus()
+            
+            if(double === false) {
+                await input.current.focus()
+            }
+
         }
     }
     
