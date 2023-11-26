@@ -1,7 +1,9 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useState } from 'react'
 
 const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : any) => {
+    const [double, setDouble] = useState(false)
+
     const Nowtime = () => {
         const answer = new Date().toLocaleString('ko-KR', {
             hour : 'numeric',
@@ -20,6 +22,7 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
 
     const inputEnter = async (event : any) => {
         if(event.key === 'Enter' && message !== '') {
+            setDouble(true)
             await axios.post('/api/fetch', {
                 to : router.query.friendUserId,
                 from : auth.userId
@@ -30,6 +33,7 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
             //await socket.emit('message-to-server', payload)
             await setChat([...chat, payload])
             setMessage('')
+            setDouble(false)
         }
     }
     
@@ -53,6 +57,7 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
                 onChange={(event) => setMessage(event.target.value)}
                 onKeyUp={(event) => inputEnter(event)}
                 className='p-1.5 w-full rounded-lg'
+                disabled={double}
             />
             <button 
                 onClick={() => inputClick()}
