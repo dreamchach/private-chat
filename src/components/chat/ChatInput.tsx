@@ -1,8 +1,9 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : any) => {
     const [double, setDouble] = useState(false)
+    const input = useRef<any>(null)
 
     const Nowtime = () => {
         const answer = new Date().toLocaleString('ko-KR', {
@@ -34,6 +35,7 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
             await setChat([...chat, payload])
             setMessage('')
             setDouble(false)
+            input.current.focus()
         }
     }
     
@@ -58,6 +60,7 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
                 onKeyUp={(event) => inputEnter(event)}
                 className='p-1.5 w-full rounded-lg'
                 disabled={double}
+                ref={input}
             />
             <button 
                 onClick={() => inputClick()}
