@@ -37,10 +37,8 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
             })
             await axios.post('/api/store', {payload})
 
-            const res = await axios.post('/api/message', {payload})
-            console.log(res)
-            await chat.push(payload)
-            setChat([...chat])
+            await axios.post('/api/message', {payload})
+
             await setMessage('')
             await setDouble(false)
         }
@@ -58,7 +56,6 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
             
             await axios.post('/api/message', {payload})
             
-            //await setChat([...chat, payload])
             await setMessage('')
             await setDouble(false)
         }
