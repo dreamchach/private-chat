@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         } else {
           const data = {
             userToken : token,
-            messages : [payload]
+            messages : []
           }
           const message = new messageModel(data)
           const saveMessage = message.save()
