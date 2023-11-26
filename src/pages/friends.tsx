@@ -8,6 +8,7 @@ import { io } from 'socket.io-client'
 import FriendsHeader from '@/components/friends/FriendsHeader'
 import AboutMe from '@/components/friends/AboutMe'
 import { useRouter } from 'next/router'
+import Layout from '@/components/Layout'
 
 export default function Home() {
   const [friends, setFriends] = useState<any>([])
@@ -62,6 +63,8 @@ export default function Home() {
 
   return (
     <div>
+      <Layout />
+      <div>
         <FriendsHeader dispatch={dispatch} />
         <AboutMe auth={auth} />
         <div className='mx-14 mt-14 flex items-center justify-center text-sm text-none-text font-bold'>접속한 유저</div>
@@ -85,6 +88,7 @@ export default function Home() {
             )) : 
             <div className='mt-14 flex items-center justify-center text-sm text-none-text font-bold'>접속 중인 유저 없음</div>
         }
+      </div>
     </div>
   )
 }

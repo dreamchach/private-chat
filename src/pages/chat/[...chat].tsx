@@ -60,7 +60,6 @@ const Chat = () => {
         to : router.query.friendUserId, 
         from : auth.userId
       })
-      console.log(res.data.data.messages)
       setChat(res.data.data.messages)
     }
     
