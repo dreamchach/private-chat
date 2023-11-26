@@ -60,9 +60,8 @@ const Chat = () => {
         to : router.query.friendUserId, 
         from : auth.userId
       })
-      console.log(res.data.data)
-      chat.push(res.data.data.messages)
-      setChat([...chat])
+      console.log(res.data.data.messages)
+      setChat(res.data.data.messages)
     }
     
     useEffect(() => {
