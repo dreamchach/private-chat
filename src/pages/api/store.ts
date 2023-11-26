@@ -1,5 +1,6 @@
 import connect from '@/lib/dbConnect'
 import { NextApiRequest, NextApiResponse } from 'next'
+import messageModel from '@/model/Message'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req
@@ -9,7 +10,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   switch (method) {
     case 'POST':
       try {
-        res.status(200).json({success : true, data : req.body.payload.message})
+        const payload = req.body.payload
+        const getToken = (sender : string, receiver : string) => {
+          const key = [sender, receiver].sort().join('_')
+          return key
+        }
+
+        const token = getToken(payload.from, payload.to)
+        const foundToken = await messageModel.findOne({userToken : token})
+
+        if(foundToken) {
+          await messageModel.findOneAndUpdate({userToken : token}, {$push: {messages : payload}})
+        } else {
+          const data = {
+            userToken : token,
+            messages : [payload]
+          }
+          const message = new messageModel(data)
+          const saveMessage = message.save()
+
+          if(saveMessage) console.log('create message')
+          else console.log('creating message error')
+        }
+
+        res.status(200).json({success : true, data : req.body.payload, token : foundToken})
         //const pets = await Pet.find({})
         //res.status(200).json({ success: true, data: pets })
       } catch (error) {
