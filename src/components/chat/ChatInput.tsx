@@ -1,9 +1,15 @@
 import axios from 'axios'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : any) => {
     const [double, setDouble] = useState(false)
     const input = useRef<any>(null)
+    useEffect(() => {
+        if(double === false) {
+            input.current.focus()
+        }
+    }, [double])
+    
 
     const Nowtime = () => {
         const answer = new Date().toLocaleString('ko-KR', {
@@ -35,11 +41,6 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
             await setChat([...chat, payload])
             await setMessage('')
             await setDouble(false)
-            
-            if(double === false) {
-                await input.current.focus()
-            }
-
         }
     }
     
