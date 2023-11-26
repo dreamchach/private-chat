@@ -25,7 +25,8 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
                 from : auth.userId
             })
             
-            const res = await axios.post('/api/store', payload) 
+            const res = await axios.post('/api/store', payload)
+            console.log(res) 
             //await socket.emit('message-to-server', payload)
             await setChat([...chat, payload])
             setMessage('')
