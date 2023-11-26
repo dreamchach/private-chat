@@ -39,7 +39,8 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
 
             const res = await axios.post('/api/message', {payload})
             console.log(res)
-            await setChat([...chat, payload])
+            await chat.push(payload)
+            setChat([...chat])
             await setMessage('')
             await setDouble(false)
         }
