@@ -62,7 +62,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div>
+    <div className='flex flex-row'>
       <Layout />
       <div>
         <FriendsHeader dispatch={dispatch} />

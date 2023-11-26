@@ -7,7 +7,7 @@ const ChatBodyInner = ({index, item, auth, router} : any) => {
         <div key={index} className={`flex gap-x-2.5 mt-1 ${item.from === auth.userId && 'justify-end'}`}>
             {item.from === auth.userId ? 
                 <div></div> : 
-                <div>
+                <div className='border-black border rounded-full bg-white'>
                     <Avatar
                         size={40}
                         name={router.query.friendAvatar as string}

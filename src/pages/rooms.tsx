@@ -3,7 +3,7 @@ import React from 'react'
 
 const rooms = () => {
   return (
-    <div>
+    <div className='flex flex-row'>
         <Layout />
         <div>rooms</div>
     </div>
