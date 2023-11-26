@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   switch (method) {
     case 'POST':
       try {
-        res.status(200).json({success : true, data : req.body.payload})
+        res.status(200).json({success : true, data : req.body.payload.message})
         //const pets = await Pet.find({})
         //res.status(200).json({ success: true, data: pets })
       } catch (error) {
