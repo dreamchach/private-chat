@@ -23,7 +23,7 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
 
     const inputEnter = async (event : any) => {
         if(event.key === 'Enter' && message !== '') {
-            setDouble(true)
+            await setDouble(true)
             await axios.post('/api/fetch', {
                 to : router.query.friendUserId,
                 from : auth.userId
@@ -33,9 +33,10 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
             console.log(res) 
             //await socket.emit('message-to-server', payload)
             await setChat([...chat, payload])
-            setMessage('')
-            setDouble(false)
-            return input.current.focus()
+            await setMessage('')
+            await setDouble(false)
+            console.log(input)
+            await input.current.focus()
         }
     }
     
