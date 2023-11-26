@@ -20,12 +20,12 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
 
     const inputEnter = async (event : any) => {
         if(event.key === 'Enter' && message !== '') {
-            console.log(payload)
-            const res = await axios.post('/api/fetch', {
+            await axios.post('/api/fetch', {
                 to : router.query.friendUserId,
                 from : auth.userId
             })
-            console.log('/api/fetch', res)
+            
+            const res = await axios.post('/api/store', payload) 
             //await socket.emit('message-to-server', payload)
             await setChat([...chat, payload])
             setMessage('')

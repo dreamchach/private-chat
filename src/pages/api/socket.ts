@@ -1,11 +1,9 @@
-import connect from "@/lib/dbConnect"
 import { Server } from "socket.io"
 import messageModel from '@/model/Message'
 
 let users : any = []
 
 export default function handler(req: any, res: any) {
-  connect()
 
   if(res.socket.server.io) {
     console.log('now binding...')
@@ -43,9 +41,7 @@ export default function handler(req: any, res: any) {
           const foundToken = await messageModel.findOne({userToken : token})
       
           if(foundToken) {
-            console.log('token is found')
             io.to(socket.id).emit('stored-messages', {messages : foundToken.messages})
-            io.to(to).emit('send-message', socket.id)
           } else {
             const data = {
               userToken : token,
