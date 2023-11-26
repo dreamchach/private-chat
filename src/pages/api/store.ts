@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           else console.log('creating message error')
         }
 
-        res.status(200).json({success : true, data : req.body.payload, token : foundToken})
+        res.status(200).json({data : req.body.payload.message})
         //const pets = await Pet.find({})
         //res.status(200).json({ success: true, data: pets })
       } catch (error) {
