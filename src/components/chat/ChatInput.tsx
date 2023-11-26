@@ -35,7 +35,7 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
             await setChat([...chat, payload])
             setMessage('')
             setDouble(false)
-            input.current.focus()
+            return input.current.focus()
         }
     }
     
