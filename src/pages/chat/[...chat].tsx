@@ -27,7 +27,10 @@ const Chat = () => {
 
       socket.on('messages', (payload : any) => {
         const copyChat = [...chat, payload]
+        console.log('chat', chat)
+        console.log('copyChat', copyChat)
         setChat(copyChat)
+        console.log(chat)
       })
 /*  
       socket.on('stored-messages', ({messages} : any) => {
