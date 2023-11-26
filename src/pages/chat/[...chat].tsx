@@ -26,10 +26,8 @@ const Chat = () => {
       })
 
       socket.on('messages', (payload : any) => {
-        const copyChat = [...chat, payload]
-        console.log('chat', chat)
-        console.log('copyChat', copyChat)
-        setChat(copyChat)
+        chat.push(payload)
+        setChat([...chat])
         console.log(chat)
       })
 /*  
