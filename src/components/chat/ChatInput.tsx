@@ -30,14 +30,15 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
     const inputEnter = async (event : any) => {
         if(event.key === 'Enter' && message !== '') {
             await setDouble(true)
+            
             await axios.post('/api/fetch', {
                 to : router.query.friendUserId,
                 from : auth.userId
             })
-            
-            const res = await axios.post('/api/store', {payload})
-            console.log(res) 
-            //await socket.emit('message-to-server', payload)
+            await axios.post('/api/store', {payload})
+
+            const res = await axios.post('api/message', {payload})
+            console.log(res)
             await setChat([...chat, payload])
             await setMessage('')
             await setDouble(false)
@@ -46,14 +47,19 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
     
     const inputClick = async () => {
         if(message !== '') {
-            const res = await axios.post('/api/fetch', {
+            await setDouble(true)
+            
+            await axios.post('/api/fetch', {
                 to : router.query.friendUserId,
                 from : auth.userId
             })
-            console.log('/api/fetch', res)
-            //await socket.emit('message-to-server', payload)
+            await axios.post('/api/store', {payload})
+            
+            await axios.post('api/message', {payload})
+            
             await setChat([...chat, payload])
             await setMessage('')
+            await setDouble(false)
         }
     }
 
@@ -69,7 +75,7 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
             />
             <button 
                 onClick={() => inputClick()}
-                disabled={message === '' ? true : false}
+                disabled={(message === '' ? true : false) && double}
                 className={`shrink-0 py-1.5 px-4 my-0 rounded-lg ${message === '' ? 'bg-none-button text-none-text' : 'hover:bg-hover-green hover:text-white'}`}
             >
                 전송

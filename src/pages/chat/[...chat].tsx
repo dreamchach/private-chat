@@ -24,11 +24,11 @@ const Chat = () => {
       socket.on('connect', () => {
         console.log('connected')
       })
-  
+/*  
       socket.on('stored-messages', ({messages} : any) => {
         setChat(messages)
      })
-     
+
      socket.on('message-to-client', (payload : any) => {
          const copyChat = [...chat, payload]
          setChat(copyChat)
@@ -38,7 +38,7 @@ const Chat = () => {
         const copyChat = [...chat, payload]
         setChat(copyChat)
     })
-
+*/
   /*
       socket.on('send-message', (to : any) => {
         dispatch(input(to))

@@ -2,7 +2,7 @@ import RandomAvatar from '@/components/index/RandomAvatar'
 import { onRandom } from '@/utill/functions/function'
 import { onclick, pressEnter } from '@/utill/functions/link'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Index = () => {
@@ -12,8 +12,11 @@ const Index = () => {
   })
   const [name, setName] = useState(auth.nickName)
   const dispatch = useDispatch()
+  const input = useRef<any>(null)
 
   useEffect(() => {
+    input.current.focus()
+    
     if(auth.userId !== '') {
       router.push('/friends')
     }else {
@@ -29,6 +32,7 @@ const Index = () => {
         onChange={(event) => setName(event?.target.value)} 
         placeholder="사용할 닉네임을 적어주세요"
         onKeyUp={(event) => pressEnter(event.key, name, router, dispatch)}
+        ref={input}
         className="box-border mx-14 my-0 w-300 py-2.5 px-5 rounded-xl outline-0 min-w-300"
       />
       <button 
