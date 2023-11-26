@@ -24,6 +24,10 @@ const Chat = () => {
       socket.on('connect', () => {
         console.log('connected')
       })
+
+      socket.on('messages', (payload : any) => {
+        console.log(payload)
+      })
 /*  
       socket.on('stored-messages', ({messages} : any) => {
         setChat(messages)
