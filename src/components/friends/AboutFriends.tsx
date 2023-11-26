@@ -3,7 +3,6 @@ import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import FriendAvatar from './FriendAvatar';
 
 const AboutFriends = ({friend, wait} : any) => {
-    console.log('component', 'waitPeople', wait.waitPeople, 'friend', friend)
     return (
         <div  className='mx-14 flex items-center justify-between gap-5 mt-5 hover:bg-none-button p-2 rounded-xl'>
             <FriendAvatar friend={friend}/>

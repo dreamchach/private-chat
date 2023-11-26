@@ -28,7 +28,6 @@ const Chat = () => {
       socket.on('messages', (payload : any) => {
         chat.push(payload)
         setChat([...chat])
-        console.log(chat)
       })
 /*  
       socket.on('stored-messages', ({messages} : any) => {
@@ -55,10 +54,19 @@ const Chat = () => {
         console.log('error')
       })
     }
+
+    const last = async () => {
+      const res = await axios.post('/api/last', {
+        to : router.query.friendUserId, 
+        from : auth.id
+      })
+      console.log(res)
+    }
     
     useEffect(() => {
       if(auth.id !== '' && auth.nickName !== '') {
         socketInitializer()
+        last()
       }else router.push('/')
     
       return () => {

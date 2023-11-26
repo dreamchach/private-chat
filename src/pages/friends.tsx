@@ -17,7 +17,6 @@ export default function Home() {
   const wait = useSelector((state : any) => {
       return state.wait
   })
-  console.log('page', wait)
   const dispatch = useDispatch()
   const router = useRouter()
   
