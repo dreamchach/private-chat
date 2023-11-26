@@ -49,7 +49,7 @@ export default function Home() {
   }
   
   useEffect(() => {
-    if(auth.id !== '' && auth.nickName !== '') {
+    if(auth.userId !== '' && auth.nickName !== '') {
       socketInitializer()
     }else router.push('/')
   

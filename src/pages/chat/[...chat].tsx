@@ -58,13 +58,13 @@ const Chat = () => {
     const last = async () => {
       const res = await axios.post('/api/last', {
         to : router.query.friendUserId, 
-        from : auth.id
+        from : auth.userId
       })
       console.log(res)
     }
     
     useEffect(() => {
-      if(auth.id !== '' && auth.nickName !== '') {
+      if(auth.userId !== '' && auth.nickName !== '') {
         socketInitializer()
         last()
       }else router.push('/')
