@@ -9,17 +9,21 @@ const Layout = () => {
   console.log(router)
   return (
     <div className='h-screen fixed bg-slate-100'>
-        <Link href='/friends' className='my-16'>
-          <div className='w-14 text-4xl text-slate-400 hover:text-slate-950'>
-            <FaUser />
+        <Link href='/friends'>
+          <div className={`my-16 ${router.pathname === '/friends' ? 'text-slate-950' : 'text-slate-300'} hover:text-slate-500`}>
+            <div className='w-14 text-4xl'>
+              <FaUser />
+            </div>
+            <div className='flex items-center justify-center text-xs'>친구</div>
           </div>
-          <div className='flex items-center justify-center text-slate-400 hover:text-slate-950 text-xs'>친구</div>
         </Link>
-        <Link href='/rooms' className='my-16'>
-          <div className='w-14 text-4xl text-slate-400 hover:text-slate-950'>
-            <IoChatbubble />
+        <Link href='/rooms'>
+          <div className={`my-16 ${router.pathname === '/friends' ? 'text-slate-950' : 'text-slate-300'} hover:text-slate-500`}>
+            <div className='w-14 text-4xl'>
+              <IoChatbubble />
+            </div>
+            <div className='flex items-center justify-center text-xs'>채팅</div>
           </div>
-          <div className='flex items-center justify-center text-slate-400 hover:text-slate-950 text-xs'>채팅</div>
         </Link>
     </div>
   )
