@@ -1,13 +1,15 @@
 import Layout from '@/components/Layout'
 import FriendsHeader from '@/components/friends/FriendsHeader'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaPlus } from "react-icons/fa";
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { io } from 'socket.io-client';
+import Modal from 'react-modal'
 
 const Rooms = () => {
+  const [modal, setModal] = useState(false)
   const dispatch = useDispatch()
   const router = useRouter()
   const auth = useSelector((state : any) => {
@@ -56,7 +58,7 @@ const Rooms = () => {
   }, [])
 
   const click = async () => {
-    
+    setModal(true)
   }
 
   return (
@@ -70,6 +72,11 @@ const Rooms = () => {
               className='transition flex items-center gap-5 py-2.5 px-5 rounded-lg bg-slate-200 shadow hover:bg-slate-400 hover:shadow-xl transition'>
               <FaPlus /> 채팅방 생성
             </button>
+            {modal && 
+              <Modal isOpen={modal}>
+                modal content
+              </Modal>
+            }
           </div>
         </div>
     </div>
