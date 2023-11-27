@@ -64,7 +64,7 @@ export default function Home() {
   return (
     <div className='flex flex-row'>
       <Layout />
-      <div>
+      <div className='ml-14 w-full'>
         <FriendsHeader dispatch={dispatch} />
         <AboutMe auth={auth} />
         <div className='mx-14 mt-14 flex items-center justify-center text-sm text-none-text font-bold'>접속한 유저</div>
