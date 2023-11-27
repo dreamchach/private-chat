@@ -10,7 +10,7 @@ const Layout = () => {
   return (
     <div className='h-screen fixed bg-slate-100'>
         <Link href='/friends'>
-          <div className={`my-16 ${router.pathname === '/friends' ? 'text-slate-950' : 'text-slate-300'} hover:text-slate-500`}>
+          <div className={`flex flex-col items-center justify-center my-16 ${router.pathname === '/friends' ? 'text-slate-950' : 'text-slate-300'} hover:text-slate-500`}>
             <div className='w-14 text-4xl'>
               <FaUser />
             </div>
@@ -18,7 +18,7 @@ const Layout = () => {
           </div>
         </Link>
         <Link href='/rooms'>
-          <div className={`my-16 ${router.pathname === '/friends' ? 'text-slate-950' : 'text-slate-300'} hover:text-slate-500`}>
+          <div className={`flex flex-col items-center justify-center my-16 ${router.pathname === '/rooms' ? 'text-slate-950' : 'text-slate-300'} hover:text-slate-500`}>
             <div className='w-14 text-4xl'>
               <IoChatbubble />
             </div>
