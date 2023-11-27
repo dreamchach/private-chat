@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 
-const rooms = () => {
+const Rooms = () => {
   const dispatch = useDispatch()
   const router = useRouter()
   const auth = useSelector((state : any) => {
@@ -66,4 +66,4 @@ const rooms = () => {
   )
 }
 
-export default rooms
+export default Rooms
