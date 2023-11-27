@@ -23,40 +23,6 @@ export default function handler(req: any, res: any) {
 
       io.emit('users-data', {users})
 
-      socket.on('message-to-server', (payload) => {
-        io.to(payload.to).emit('message-to-client', payload)
-
-        //saveMessage(payload)
-      })
-
-      socket.on('fetch-messages', ({to}) => {
-        console.log(to)
-        const saveMessage = async () => {
-          const getToken = (sender : string, receiver : string) => {
-            const key = [sender, receiver].sort().join('_')
-            return key
-          }
-
-          const token = getToken(socket.id, to)
-          const foundToken = await messageModel.findOne({userToken : token})
-      
-          if(foundToken) {
-            io.to(socket.id).emit('stored-messages', {messages : foundToken.messages})
-          } else {
-            const data = {
-              userToken : token,
-              messages : []
-            }
-            const message = new messageModel(data)
-            const saveMessage = message.save()
-      
-            if(saveMessage) console.log('create message')
-            else console.log('creating message error')
-          }
-        }
-        saveMessage()
-      })
-
       socket.on('disconnect', () => {
         users = users.filter((user : any) => user.userId !== socket.handshake.auth.userId)
         io.emit('users-data', {users})

@@ -38,7 +38,7 @@ const Index = () => {
       <button 
         onClick={() => onclick(name, router, dispatch)}
         disabled={name === '' ? true : false}
-        className={`${name === '' ? 'bg-none-button text-none-text' : 'bg-white hover:bg-hover-green hover:border-white hover:shadow-xl hover:text-white'} box-border mx-14 my-0 w-300 py-2.5 px-5 rounded-xl border-2 shadow border-black min-w-300`}
+        className={`${name === '' ? 'bg-none-button text-none-text' : 'transition bg-white hover:bg-hover-green hover:border-white hover:shadow-xl hover:text-white'} box-border mx-14 my-0 w-300 py-2.5 px-5 rounded-xl border-2 shadow border-black min-w-300`}
       >
         입장
       </button>

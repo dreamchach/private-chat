@@ -74,7 +74,7 @@ const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : 
             <button 
                 onClick={() => inputClick()}
                 disabled={(message === '' ? true : false) && double}
-                className={`shrink-0 py-1.5 px-4 my-0 rounded-lg ${message === '' ? 'bg-none-button text-none-text' : 'hover:bg-hover-green hover:text-white'}`}
+                className={`shrink-0 py-1.5 px-4 my-0 rounded-lg ${message === '' ? 'bg-none-button text-none-text' : 'hover:bg-hover-green hover:text-white transition'}`}
             >
                 전송
             </button>            

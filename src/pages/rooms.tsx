@@ -24,6 +24,10 @@ const Rooms = () => {
     socket.on('connect', () => {
       console.log('connected')
     })
+
+    socket.on('join', (data : any) => {
+      console.log('join data', data)
+    })
 /*
     socket.on('users-data', ({users} : any) => {
       const notMe = users.filter((user : any) => {
@@ -51,13 +55,19 @@ const Rooms = () => {
     }
   }, [])
 
+  const click = async () => {
+    
+  }
+
   return (
     <div className='flex flex-row'>
         <Layout />
         <div className='ml-14 w-full'>
           <FriendsHeader dispatch={dispatch} />
           <div className='mt-40 flex justify-center'>
-            <button className='flex items-center gap-5 py-2.5 px-5 rounded-lg bg-slate-200 shadow hover:bg-slate-400 hover:shadow-xl transition'>
+            <button 
+              onClick={() => click()}
+              className='transition flex items-center gap-5 py-2.5 px-5 rounded-lg bg-slate-200 shadow hover:bg-slate-400 hover:shadow-xl transition'>
               <FaPlus /> 채팅방 생성
             </button>
           </div>

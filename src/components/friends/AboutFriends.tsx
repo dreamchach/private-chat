@@ -4,7 +4,7 @@ import FriendAvatar from './FriendAvatar';
 
 const AboutFriends = ({friend, wait} : any) => {
     return (
-        <div  className='mx-14 flex items-center justify-between gap-5 mt-5 hover:bg-none-button p-2 rounded-xl'>
+        <div  className='mx-14 flex items-center justify-between gap-5 mt-5 hover:bg-none-button p-2 rounded-xl transition'>
             <FriendAvatar friend={friend}/>
             <div className='ml-5'>
                 {wait.waitPeople.includes(friend.userId) && <IoChatbubbleEllipsesOutline color='red' size='30'/>}
