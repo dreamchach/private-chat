@@ -73,16 +73,37 @@ const Rooms = () => {
   }, [])
 
   const click = async () => {
-    setModal(false)
-    const roomId = crypto.randomUUID()
-    router.push({
-      pathname : `/allchat/${roomId}`,
-      query : {
-        roomid : roomId,
-        roomname : roomName
-      }
-    })
+    if(roomName !== '') {
+      setModal(false)
+      const roomId = crypto.randomUUID()
+      router.push({
+        pathname : `/allchat/${roomId}`,
+        query : {
+          roomid : roomId,
+          roomname : roomName
+        }
+      })      
+    }else {
+      alert('채팅방 이름은 공백이 불가능합니다')
+    }
   }
+
+  const keyup = async (event : any) => {
+    if (event.key === 'Enter' && roomName !== '') {
+      setModal(false)
+      const roomId = crypto.randomUUID()
+      router.push({
+        pathname : `/allchat/${roomId}`,
+        query : {
+          roomid : roomId,
+          roomname : roomName
+        }
+      }) 
+  }else if(event.key === 'Enter' && roomName === '') {
+      alert('이름은 공백이 불가능합니다')
+  }
+  }
+
   return (
     <div className='flex flex-row'>
         <Layout />
@@ -106,12 +127,13 @@ const Rooms = () => {
                     value={roomName} 
                     onChange={(event) => setRoomName(event.target.value)} 
                     className='py-2.5 px-5 rounded-lg'
+                    onKeyUp={(event) => keyup(event)}
                   />
                 </div>
                 <div className='mt-10 mb-5'>
                   <button 
                     onClick={() => click()}
-                    className='mb-5 w-full py-2.5 px-5 rounded-lg bg-basic-green shadow hover:bg-hover-green hover:shadow-lg transition'
+                    className={`mb-5 w-full py-2.5 px-5 rounded-lg ${roomName === '' ? 'bg-none-button text-none-text' : 'bg-basic-green hover:bg-hover-green hover:shadow-lg'} shadow transition`}
                   >
                     채팅방 생성
                   </button>

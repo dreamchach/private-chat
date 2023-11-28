@@ -21,15 +21,15 @@ const AllChat = () => {
       socket.on('connect', () => {
         console.log('connected')
       })
-      /*
-      await axios.post('/api/makeroom', {
-        roomName,
-        roomid,
-        auth
-      })
-      */
 
-      
+    await axios.post('/api/makeroom', {
+        roomName : router.query.roomname,
+        roomid : router.query.roomid,
+        auth
+    })
+
+
+
   /*
       socket.on('users-data', ({users} : any) => {
         const notMe = users.filter((user : any) => {
