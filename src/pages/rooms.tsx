@@ -25,6 +25,7 @@ const customStyles = {
 const Rooms = () => {
   const [modal, setModal] = useState(false)
   const [roomName, setRoomName] = useState('')
+  const [rooms, setRooms] = useState([])
   const dispatch = useDispatch()
   const router = useRouter()
   const auth = useSelector((state : any) => {

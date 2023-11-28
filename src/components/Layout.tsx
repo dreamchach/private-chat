@@ -6,7 +6,6 @@ import { IoChatbubble } from "react-icons/io5";
 
 const Layout = () => {
   const router = useRouter()
-  console.log(router)
   return (
     <div className='h-screen fixed bg-slate-100'>
         <Link href='/friends'>

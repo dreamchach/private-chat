@@ -9,7 +9,6 @@ const AllChat = () => {
     const auth = useSelector((state : any) => {
       return state.auth
     })
-    console.log(router)
   
     let socket : any
     
