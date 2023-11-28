@@ -1,4 +1,4 @@
-let rooms = <any>[]
+const rooms = <any>[]
 
 export default function ChatHandler (req : any, res : any) {
     if(req.method === 'POST') {
@@ -9,11 +9,14 @@ export default function ChatHandler (req : any, res : any) {
      const double = rooms.some((item : any) => item.roomid === roomid)
 
      if(double) {
-        rooms = rooms.map((item : any) => {
-            if(item.roomid === roomid) {
-                return {...item, users : [...item.users, auth]}
-            }else return item
-        })
+        const addAuth = () => {
+            for(const item of rooms) {
+                if(item.roomid === roomid) {
+                    item.users.push(auth)
+                }
+            }
+        }
+        addAuth()
      }else {
         rooms.push({
             roomname,
