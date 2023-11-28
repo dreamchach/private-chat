@@ -46,6 +46,7 @@ const Rooms = () => {
 
     socket.on('rooms-data', (data : any) => {
       setRooms(data.rooms)
+      console.log(data)
     })
 /*
     socket.on('users-data', ({users} : any) => {
