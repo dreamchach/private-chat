@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 import Modal from 'react-modal'
+import Link from 'next/link';
 
 const customStyles = {
   content: {
@@ -44,7 +45,7 @@ const Rooms = () => {
     })
 
     socket.on('rooms-data', (data : any) => {
-      console.log('join data', data)
+      setRooms(data.rooms)
     })
 /*
     socket.on('users-data', ({users} : any) => {
@@ -148,6 +149,11 @@ const Rooms = () => {
               </Modal>
             }
           </div>
+          {rooms.length > 0 && rooms.map((item : any) => (
+            <Link href={`/allchat/${item.roomid}`}>
+              {item.roomname}
+            </Link>
+          ))}
         </div>
     </div>
   )
