@@ -10,6 +10,7 @@ import Modal from 'react-modal'
 
 const Rooms = () => {
   const [modal, setModal] = useState(false)
+  const [roomName, setRoomName] = useState('')
   const dispatch = useDispatch()
   const router = useRouter()
   const auth = useSelector((state : any) => {
@@ -74,7 +75,13 @@ const Rooms = () => {
             </button>
             {modal && 
               <Modal isOpen={modal}>
-                modal content
+                <div>
+                  <div>채팅방 이름</div>
+                  <input value={roomName} onChange={(event) => setRoomName(event.target.value)} />
+                </div>
+                <div>
+                  <button onClick={() => setModal(false)}>채팅방 생성</button>
+                </div>
               </Modal>
             }
           </div>
