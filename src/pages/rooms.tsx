@@ -8,6 +8,17 @@ import axios from 'axios';
 import { io } from 'socket.io-client';
 import Modal from 'react-modal'
 
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
+
 const Rooms = () => {
   const [modal, setModal] = useState(false)
   const [roomName, setRoomName] = useState('')
@@ -61,6 +72,9 @@ const Rooms = () => {
   const click = async () => {
     setModal(true)
   }
+  const modalAfter = () => {
+    console.log('modal close after')
+  }
 
   return (
     <div className='flex flex-row'>
@@ -74,7 +88,14 @@ const Rooms = () => {
               <FaPlus /> 채팅방 생성
             </button>
             {modal && 
-              <Modal isOpen={modal}>
+              <Modal 
+                isOpen={modal}
+                onAfterClose={() => modalAfter()}
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+                preventScroll={true}
+                style={customStyles}
+              >
                 <div>
                   <div>채팅방 이름</div>
                   <input value={roomName} onChange={(event) => setRoomName(event.target.value)} />
