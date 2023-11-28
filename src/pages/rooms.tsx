@@ -16,6 +16,9 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
+    backgroundColor: '#8fefd4',
+    borderRadius: '16px',
+    boxShadow: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)'
   },
 };
 
@@ -96,12 +99,28 @@ const Rooms = () => {
                 preventScroll={true}
                 style={customStyles}
               >
-                <div>
-                  <div>채팅방 이름</div>
-                  <input value={roomName} onChange={(event) => setRoomName(event.target.value)} />
+                <div className='flex flex-col items-center gap-5'>
+                  <div className='text-lg font-bold'>채팅방 이름</div>
+                  <input 
+                    placeholder='채팅방 이름을 정해주세요' 
+                    value={roomName} 
+                    onChange={(event) => setRoomName(event.target.value)} 
+                    className='py-2.5 px-5 rounded-lg'
+                  />
                 </div>
-                <div>
-                  <button onClick={() => setModal(false)}>채팅방 생성</button>
+                <div className='mt-10 mb-5'>
+                  <button 
+                    onClick={() => setModal(false)}
+                    className='mb-5 w-full py-2.5 px-5 rounded-lg bg-basic-green shadow hover:bg-hover-green hover:shadow-lg transition'
+                  >
+                    채팅방 생성
+                  </button>
+                  <button 
+                    onClick={() => setModal(false)}
+                    className='mb-5 w-full py-2.5 px-5 rounded-lg bg-none-button shadow hover:bg-none-text hover:shadow-lg transition'
+                  >
+                    취소
+                  </button>
                 </div>
               </Modal>
             }
