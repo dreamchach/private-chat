@@ -9,6 +9,7 @@ const AllChat = () => {
     const auth = useSelector((state : any) => {
       return state.auth
     })
+    console.log(router.query)
   
     let socket : any
     
@@ -20,14 +21,6 @@ const AllChat = () => {
       socket.on('connect', () => {
         console.log('connected')
       })
-
-    await axios.post('/api/makeroom', {
-        roomName : router.query.roomname,
-        roomid : router.query.roomid,
-        auth
-    })
-
-
 
   /*
       socket.on('users-data', ({users} : any) => {
@@ -55,6 +48,18 @@ const AllChat = () => {
         }
       }
     }, [])
+
+    useEffect(() => {
+        const room = async () => {
+            await axios.post('/api/makeroom', {
+                roomName : router.query.roomname,
+                roomid : router.query.roomid,
+                auth
+            })
+        }
+        room()
+    }, [])
+    
 
   return (
     <div>all chat</div>

@@ -151,7 +151,13 @@ const Rooms = () => {
             }
           </div>
           {rooms.length > 0 && rooms.map((item : any) => (
-            <Link href={`/allchat/${item.roomid}`} key={item.roomid}>
+            <Link href={{
+              pathname : `/allchat/${item.roomid}`,
+              query : {
+                roomid : item.roomid,
+                roomname : item.roomname
+              }
+              }} key={item.roomid}>
               {item.roomname}
             </Link>
           ))}

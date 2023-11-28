@@ -21,7 +21,7 @@ export default function ChatHandler (req : any, res : any) {
         rooms.push({
             roomname,
             roomid,
-            users : [{auth}]
+            users : [auth]
         })
      }
      
