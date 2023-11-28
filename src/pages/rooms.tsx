@@ -150,7 +150,7 @@ const Rooms = () => {
             }
           </div>
           {rooms.length > 0 && rooms.map((item : any) => (
-            <Link href={`/allchat/${item.roomid}`}>
+            <Link href={`/allchat/${item.roomid}`} key={item.roomid}>
               {item.roomname}
             </Link>
           ))}
