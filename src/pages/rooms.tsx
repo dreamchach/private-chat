@@ -42,7 +42,7 @@ const Rooms = () => {
       console.log('connected')
     })
 
-    socket.on('join', (data : any) => {
+    socket.on('rooms-data', (data : any) => {
       console.log('join data', data)
     })
 /*
@@ -73,12 +73,16 @@ const Rooms = () => {
   }, [])
 
   const click = async () => {
-    setModal(true)
+    setModal(false)
+    const roomId = crypto.randomUUID()
+    router.push({
+      pathname : `/allchat/${roomId}`,
+      query : {
+        roomid : roomId,
+        roomname : roomName
+      }
+    })
   }
-  const modalAfter = () => {
-    console.log('modal close after')
-  }
-
   return (
     <div className='flex flex-row'>
         <Layout />
@@ -86,17 +90,13 @@ const Rooms = () => {
           <FriendsHeader dispatch={dispatch} />
           <div className='mt-40 flex justify-center'>
             <button 
-              onClick={() => click()}
-              className='transition flex items-center gap-5 py-2.5 px-5 rounded-lg bg-slate-200 shadow hover:bg-slate-400 hover:shadow-xl transition'>
+              onClick={() => setModal(true)}
+              className='transition flex items-center gap-5 py-2.5 px-5 rounded-lg bg-none-button shadow hover:bg-none-text hover:shadow-xl transition'>
               <FaPlus /> 채팅방 생성
             </button>
             {modal && 
               <Modal 
                 isOpen={modal}
-                onAfterClose={() => modalAfter()}
-                shouldCloseOnOverlayClick={true}
-                shouldCloseOnEsc={true}
-                preventScroll={true}
                 style={customStyles}
               >
                 <div className='flex flex-col items-center gap-5'>
@@ -110,7 +110,7 @@ const Rooms = () => {
                 </div>
                 <div className='mt-10 mb-5'>
                   <button 
-                    onClick={() => setModal(false)}
+                    onClick={() => click()}
                     className='mb-5 w-full py-2.5 px-5 rounded-lg bg-basic-green shadow hover:bg-hover-green hover:shadow-lg transition'
                   >
                     채팅방 생성
