@@ -39,6 +39,7 @@ const AllChat = () => {
     const roomId = searchParams.get('roomid')
     const roomName = searchParams.get('roomname')
     const [openRoomUsers, setOpenRoomUsers] = useState(false)
+    console.log(chat)
   
     const Nowtime = () => {
       const answer = new Date().toLocaleString('ko-KR', {
@@ -92,7 +93,21 @@ const AllChat = () => {
       })
 
       socket.on('welcome-message', (data : any) => {
-        console.log(`${data.nickName}님이 입장했습니다`)
+        const adminPayload = {
+          from : 'admin',
+          message : `${data.nickName}님이 입장했습니다`
+        }
+        chat.push(adminPayload)
+        setChat([...chat])
+      })
+
+      socket.on('goodbye-message', (data : any) => {
+        const adminPayload = {
+          from : 'admin',
+          message : `${data.nickName}님이 퇴장했습니다`
+        }
+        chat.push(adminPayload)
+        setChat([...chat])
       })
 
       socket.on('room-messages', (payload : any) => {
@@ -222,6 +237,82 @@ const friendChat = (item : any) => {
   }
 }
 
+const containerDiv = (item : string) => {
+  if(item === 'admin') {
+    return 'justify-center'
+  } else if(item === auth.userId) {
+    return 'justify-end'
+  } else return 'justify-start'
+  //${item.from === auth.userId && 'justify-end'}
+}
+
+const avatarDiv = (item : any) => {
+  if(item.from === 'admin' || item.from === auth.userId) {
+    return (<div></div>)
+  } else return (
+    <div className='border-black border rounded-full bg-white'>
+    <Avatar
+      size={40}
+      name={item.auth.avatar as string}
+      variant='beam'
+      colors={item.auth.color as string[]}
+    />
+  </div>
+  )
+  /*
+            {item.from === auth.userId ? 
+              <div></div> : 
+              <div className='border-black border rounded-full bg-white'>
+                <Avatar
+                  size={40}
+                  name={item.auth.avatar as string}
+                  variant='beam'
+                  colors={item.auth.color as string[]}
+                />
+              </div>
+            }
+  */
+}
+
+const messageDiv = (item : any) => {
+  if(item.from === 'admin') {
+    return (
+      <div className='text-sm text-none-text font-bold py-2.5'>{item.message}</div>
+    )
+  } else if (item.from === auth.userId) {
+    return (
+      <div>
+        <div className='flex gap-2.5 items-center mr-1 flex-row-reverse'>
+          <div className='py-2.5 px-4 rounded-lg bg-buble-yellow'>
+            {item.message}
+          </div>
+          <div className='text-none-text text-sm'>{item.time}</div>
+        </div>
+      </div>
+    )
+  } else return (
+    <div>
+      <div className='text-bold text-lg'>{item.auth.userName}</div>
+      <div className='flex gap-2.5 items-center'>
+        <div className='py-2.5 px-4 rounded-lg bg-blow-green'>
+          {item.message}
+        </div>
+        <div className='text-none-text text-sm'>{item.time}</div>
+      </div>
+    </div>
+  )
+  /*
+            <div>
+              {item.from !== auth.userId && <div className='text-bold text-lg'>{item.auth.userName}</div>}
+              <div className={`flex gap-2.5 items-center ${item.from === auth.userId && 'mr-1 flex-row-reverse'}`}>
+                <div className={`py-2.5 px-4 rounded-lg ${item.from === auth.userId ? 'bg-buble-yellow' : 'bg-blow-green' }`}>
+                  {item.message}
+                </div>
+                <div className='text-none-text text-sm'>{item.time}</div>
+              </div>
+            </div>
+  */
+}
 
   return (
     <div>
@@ -260,27 +351,9 @@ const friendChat = (item : any) => {
 
       <div className='my-14 mx-1'>
         {chat.length > 0 && chat.map((item : any, index : number) => (
-          <div key={index} className={`flex gap-x-2.5 mt-1 ${item.from === auth.userId && 'justify-end'}`}>
-            {item.from === auth.userId ? 
-              <div></div> : 
-              <div className='border-black border rounded-full bg-white'>
-                <Avatar
-                  size={40}
-                  name={item.auth.avatar as string}
-                  variant='beam'
-                  colors={item.auth.color as string[]}
-                />
-              </div>
-            }
-            <div>
-              {item.from !== auth.userId && <div className='text-bold text-lg'>{item.auth.userName}</div>}
-              <div className={`flex gap-2.5 items-center ${item.from === auth.userId && 'mr-1 flex-row-reverse'}`}>
-                <div className={`py-2.5 px-4 rounded-lg ${item.from === auth.userId ? 'bg-buble-yellow' : 'bg-blow-green' }`}>
-                  {item.message}
-                </div>
-                <div className='text-none-text text-sm'>{item.time}</div>
-              </div>
-            </div>
+          <div key={index} className={`flex gap-x-2.5 mt-1 ${containerDiv(item.from)}`}>
+            {avatarDiv(item)}
+            {messageDiv(item)}
           </div>
         ))}            
       </div>
