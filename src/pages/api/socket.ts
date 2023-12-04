@@ -13,6 +13,7 @@ export default function handler(req: any, res: any) {
     io.use((socket : any, next) => {
       console.log('socket middleware')
       socket.id = socket.handshake.auth.userId
+      console.log('middleware users', users)
 
       next()
     })
@@ -25,8 +26,12 @@ export default function handler(req: any, res: any) {
       const roomName = socket.handshake.auth.room.roomName
       const auth = socket.handshake.auth
 
-      users.push(auth)
-      console.log(auth)
+      const userDouble = users.some((item : any) => item.userId === auth.userId)
+      if(!userDouble) {
+        users.push(auth)
+      }
+
+      console.log('users', users)
 
       if(roomId !== '') {
         const double = rooms.some((item : any) => item.roomId === roomId)

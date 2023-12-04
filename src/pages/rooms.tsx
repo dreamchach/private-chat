@@ -70,6 +70,12 @@ const Rooms = () => {
 
   useEffect(() => {
     dispatch(setRoom({roomId : '', roomName : ''}))
+
+    return () => {
+      if(socket) {
+        socket.disconnect()
+      }
+    }
   }, [])
   
   
