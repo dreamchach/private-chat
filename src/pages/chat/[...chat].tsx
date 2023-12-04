@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
 import { io } from 'socket.io-client';
 import ChatHeader from '@/components/chat/ChatHeader';
 import ChatBody from '@/components/chat/ChatBody';
 import ChatInput from '@/components/chat/ChatInput';
+import { setRoom } from '@/utill/redux/authSlice';
 
 const Chat = () => {
     const router = useRouter()
@@ -14,6 +15,7 @@ const Chat = () => {
     const auth = useSelector((state : any) => {
         return state.auth
     })
+    const dispatch = useDispatch()
     let socket : any
   
     const socketInitializer = async () => {
@@ -29,27 +31,7 @@ const Chat = () => {
         chat.push(payload)
         setChat([...chat])
       })
-/*  
-      socket.on('stored-messages', ({messages} : any) => {
-        setChat(messages)
-     })
-
-     socket.on('message-to-client', (payload : any) => {
-         const copyChat = [...chat, payload]
-         setChat(copyChat)
-     })
-
-     socket.on('message-to-client', (payload : any) => {
-        const copyChat = [...chat, payload]
-        setChat(copyChat)
-    })
-*/
-  /*
-      socket.on('send-message', (to : any) => {
-        dispatch(input(to))
-        console.log('to', to)
-      })
-  */
+      
       socket.on('error', (error : any) => {
         console.log('error')
       })
@@ -64,6 +46,7 @@ const Chat = () => {
     }
     
     useEffect(() => {
+      dispatch(setRoom({roomId : '', roomName : ''}))
       if(auth.userId !== '' && auth.nickName !== '') {
         socketInitializer()
         last()
@@ -79,6 +62,7 @@ const Chat = () => {
     useEffect(() => {
         window.scrollTo(0, document.body.scrollHeight)
     }, [chat])
+    console.log(router)
    
   return (
     <div>

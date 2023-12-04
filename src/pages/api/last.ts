@@ -22,8 +22,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const foundToken = await messageModel.findOne({userToken : token})
 
         res.status(200).json({data : foundToken})
-        //const pets = await Pet.find({})
-        //res.status(200).json({ success: true, data: pets })
       } catch (error) {
         console.log('error')
       }

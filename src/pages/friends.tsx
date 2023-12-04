@@ -9,6 +9,7 @@ import FriendsHeader from '@/components/friends/FriendsHeader'
 import AboutMe from '@/components/friends/AboutMe'
 import { useRouter } from 'next/router'
 import Layout from '@/components/Layout'
+import { setRoom } from '@/utill/redux/authSlice'
 
 export default function Home() {
   const [friends, setFriends] = useState<any>([])
@@ -50,6 +51,7 @@ export default function Home() {
   }
   
   useEffect(() => {
+    dispatch(setRoom({roomId : '', roomName : ''}))
     if(auth.userId !== '' && auth.nickName !== '') {
       socketInitializer()
     }else router.push('/')

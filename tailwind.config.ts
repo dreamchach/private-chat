@@ -20,7 +20,11 @@ const config: Config = {
         '300' : '300px'
       },
       width : {
-        '300' : '300px'
+        '300' : '300px',
+        '200' : '200px'
+      },
+      height : {
+        '90vh' : '90vh'
       }
     },
   },

@@ -1,6 +1,7 @@
 import RandomAvatar from '@/components/index/RandomAvatar'
 import { onRandom } from '@/utill/functions/function'
 import { onclick, pressEnter } from '@/utill/functions/link'
+import { setRoom } from '@/utill/redux/authSlice'
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,6 +16,7 @@ const Index = () => {
   const input = useRef<any>(null)
 
   useEffect(() => {
+    dispatch(setRoom({roomId : '', roomName : ''}))
     input.current.focus()
     
     if(auth.userId !== '') {

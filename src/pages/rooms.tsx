@@ -8,6 +8,9 @@ import axios from 'axios';
 import { io } from 'socket.io-client';
 import Modal from 'react-modal'
 import Link from 'next/link';
+import Avatar from 'boring-avatars';
+import { FaUser } from "react-icons/fa";
+import { setRoom } from '@/utill/redux/authSlice';
 
 const customStyles = {
   content: {
@@ -38,10 +41,12 @@ const Rooms = () => {
   const socketInitializer = async () => {
     await axios.get('/api/socket')
     socket = io()
+    console.log(auth)
     socket.auth = auth
 
-    socket.on('connect', () => {
-      console.log('connected')
+    socket.on('connect', async () => {
+      console.log('connect')
+      // await axios.get('/api/makeroom')
     })
 
     socket.on('rooms-data', (data : any) => {
@@ -62,10 +67,17 @@ const Rooms = () => {
       console.log('error')
     })
   }
+
+  useEffect(() => {
+    dispatch(setRoom({roomId : '', roomName : ''}))
+  }, [])
+  
   
   useEffect(() => {
     if(auth.userId !== '' && auth.nickName !== '') {
-      socketInitializer()
+      if(auth.room.roomId === '' && auth.room.roomName === '') {
+        socketInitializer()
+      }
     }else router.push('/')
   
     return () => {
@@ -73,12 +85,13 @@ const Rooms = () => {
         socket.disconnect()
       }
     }
-  }, [])
+  }, [auth])
 
   const click = async () => {
     if(roomName !== '') {
       setModal(false)
       const roomId = crypto.randomUUID()
+      dispatch(setRoom({roomId, roomName}))
       router.push({
         pathname : `/allchat/${roomId}`,
         query : {
@@ -95,6 +108,7 @@ const Rooms = () => {
     if (event.key === 'Enter' && roomName !== '') {
       setModal(false)
       const roomId = crypto.randomUUID()
+      dispatch(setRoom({roomId, roomName}))
       router.push({
         pathname : `/allchat/${roomId}`,
         query : {
@@ -112,7 +126,37 @@ const Rooms = () => {
         <Layout />
         <div className='ml-14 w-full'>
           <FriendsHeader dispatch={dispatch} />
-          <div className='mt-40 flex justify-center'>
+          {rooms.length > 0 && rooms.map((item : any) => (
+            <div key={item.roomId}>
+              <Link href={{
+                pathname : `/allchat/${item.roomId}`,
+                query : {
+                  roomid : item.roomId,
+                  roomname : item.roomName
+                }
+                }}
+                onClick={() => dispatch(setRoom({roomId : item.roomId, roomName : item.roomName}))}
+                >
+                  <div  className='mx-14 flex items-center justify-between gap-5 mt-5 hover:bg-none-button p-2 rounded-xl transition'>
+                    <div className='flex items-center gap-5'>
+                      <div className='border-black border rounded-full bg-white'>
+                        <Avatar
+                          size={60}
+                          name={item.users[0].avatar}
+                          variant='beam'
+                          colors={item.users[0].color}
+                        />
+                      </div>
+                      <div className='font-bold text-lg'>{item.roomName}</div>                            
+                    </div>
+                    <div className='mx-5 flex items-center justify-center gap-5 shrink-0'>
+                      <FaUser size='30'/> {item.users.length}명
+                    </div>
+                  </div>
+              </Link>
+            </div>
+          ))}
+          <div className={`${rooms.length > 0 ? 'mt-20' : 'mt-40'} flex justify-center`}>
             <button 
               onClick={() => setModal(true)}
               className='transition flex items-center gap-5 py-2.5 px-5 rounded-lg bg-none-button shadow hover:bg-none-text hover:shadow-xl transition'>
@@ -150,17 +194,6 @@ const Rooms = () => {
               </Modal>
             }
           </div>
-          {rooms.length > 0 && rooms.map((item : any) => (
-            <Link href={{
-              pathname : `/allchat/${item.roomid}`,
-              query : {
-                roomid : item.roomid,
-                roomname : item.roomname
-              }
-              }} key={item.roomid}>
-              {item.roomname}
-            </Link>
-          ))}
         </div>
     </div>
   )
