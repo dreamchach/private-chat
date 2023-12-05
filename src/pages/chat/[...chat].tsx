@@ -42,10 +42,6 @@ const Chat = () => {
         console.log('error')
       })
     }
-
-    console.log(chat)
-
-
     
     useEffect(() => {
       dispatch(setRoom({roomId : '', roomName : ''}))
