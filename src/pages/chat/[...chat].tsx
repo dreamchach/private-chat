@@ -7,6 +7,8 @@ import ChatHeader from '@/components/chat/ChatHeader';
 import ChatBody from '@/components/chat/ChatBody';
 import ChatInput from '@/components/chat/ChatInput';
 import { setRoom } from '@/utill/redux/authSlice';
+import { chatLast } from '@/utill/functions/function';
+import { useSearchParams } from 'next/navigation';
 
 const Chat = () => {
     const router = useRouter()
@@ -16,6 +18,9 @@ const Chat = () => {
         return state.auth
     })
     const dispatch = useDispatch()
+    const searchParams = useSearchParams()
+    const friendUserId = searchParams.get('friendUserId')
+
     let socket : any
   
     const socketInitializer = async () => {
@@ -37,19 +42,12 @@ const Chat = () => {
       })
     }
 
-    const last = async () => {
-      const res = await axios.post('/api/last', {
-        to : router.query.friendUserId, 
-        from : auth.userId
-      })
-      setChat(res.data.data.messages)
-    }
+
     
     useEffect(() => {
       dispatch(setRoom({roomId : '', roomName : ''}))
       if(auth.userId !== '' && auth.nickName !== '') {
         socketInitializer()
-        last()
       }else router.push('/')
     
       return () => {
@@ -62,7 +60,11 @@ const Chat = () => {
     useEffect(() => {
         window.scrollTo(0, document.body.scrollHeight)
     }, [chat])
-    console.log(router)
+
+    useEffect(() => {
+      chatLast(friendUserId, auth, setChat)
+    }, [friendUserId])
+    
    
   return (
     <div>

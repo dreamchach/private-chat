@@ -1,8 +1,13 @@
 import React from 'react'
 import Avatar from 'boring-avatars'
 import ChatBodyInnerTime from './ChatBodyInnerTime'
+import { useSearchParams } from 'next/navigation'
 
 const ChatBodyInner = ({index, item, auth, router} : any) => {
+    const searchParams = useSearchParams()
+    const friendAvatar = searchParams.get('friendAvatar')
+    const friendColor = searchParams.get('friendColor')
+
     return (
         <div key={index} className={`flex gap-x-2.5 mt-1 ${item.from === auth.userId && 'justify-end'}`}>
             {item.from === auth.userId ? 
@@ -10,9 +15,9 @@ const ChatBodyInner = ({index, item, auth, router} : any) => {
                 <div className='border-black border rounded-full bg-white'>
                     <Avatar
                         size={40}
-                        name={router.query.friendAvatar as string}
+                        name={friendAvatar as any}
                         variant='beam'
-                        colors={router.query.friendColor as string[]}
+                        colors={friendColor as any}
                     />
                 </div>
             }

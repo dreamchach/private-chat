@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { avatarLists } from '@/utill/array/avatarList'
+import { avatarLists } from '@/utill/array-object/avatarList'
 
 export const authSlice = createSlice({
     name : 'auth',
