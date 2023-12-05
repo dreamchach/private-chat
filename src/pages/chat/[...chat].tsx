@@ -33,6 +33,7 @@ const Chat = () => {
       })
 
       socket.on('messages', (payload : any) => {
+        console.log(chat)
         chat.push(payload)
         setChat([...chat])
       })
