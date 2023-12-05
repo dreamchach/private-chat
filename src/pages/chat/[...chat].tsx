@@ -30,12 +30,13 @@ const Chat = () => {
       socket.on('connect', async () => {
         console.log('connected')
 
-        const res = await axios.post('/api/last', {
+        await axios.post('/api/last', {
           to : friendUserId, 
           from : auth.userId
+        }).then((res) => {
+          setChat([...res.data.data.messages])
+          console.log('chat', chat)          
         })
-        setChat([...res.data.data.messages])
-        console.log('chat', chat)
       })
 
       socket.on('messages', (payload : any) => {
