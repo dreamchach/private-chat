@@ -8,7 +8,7 @@ const ChatHeader = ({router} : any) => {
     const friendNickname = searchParams.get('friendNickname')
 
     return (
-        <div className='flex items-center h-12 pl-5 gap-5 bg-basic-green'>
+        <div className='flex items-center h-12 pl-5 gap-5 bg-basic-green fixed w-full top-0'>
             <Link href='/friends'>
                 <FaArrowLeft />
             </Link>

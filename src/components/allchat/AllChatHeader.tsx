@@ -4,7 +4,7 @@ import { IoMenu } from 'react-icons/io5'
 
 const AllChatHeader = ({setModal, roomName, setOpenRoomUsers, openRoomUsers} : any) => {
   return (
-    <div className='flex justify-between h-12 px-5 bg-basic-green'>
+    <div className='flex justify-between h-12 px-5 bg-basic-green fixed w-full top-0'>
     <div className='flex items-center gap-5'>
       <div onClick={() => setModal(true)}>
         <FaArrowLeft />
