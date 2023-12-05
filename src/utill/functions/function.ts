@@ -63,7 +63,7 @@ export const allChatInputClick = async (message : string, payload : any, roomId 
         await axios.post('/api/roommessage', {payload, roomId : roomId})
     }
 }
-
+/*
 export const chatLast = async (friendUserId : any, auth : any, setChat : any) => {
     const res = await axios.post('/api/last', {
       to : friendUserId, 
@@ -72,7 +72,7 @@ export const chatLast = async (friendUserId : any, auth : any, setChat : any) =>
     console.log('res', res)
     setChat(res.data.data.messages)
   }
-
+*/
 export const roomInputClick = async (roomName : string, setModal : any, dispatch : any, router : any) => {
     if(roomName !== '') {
       setModal(false)

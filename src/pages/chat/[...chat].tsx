@@ -7,7 +7,6 @@ import ChatHeader from '@/components/chat/ChatHeader';
 import ChatBody from '@/components/chat/ChatBody';
 import ChatInput from '@/components/chat/ChatInput';
 import { setRoom } from '@/utill/redux/authSlice';
-import { chatLast } from '@/utill/functions/function';
 import { useSearchParams } from 'next/navigation';
 
 const Chat = () => {
@@ -24,7 +23,11 @@ const Chat = () => {
     let socket : any
   
     const socketInitializer = async () => {
-      await chatLast(friendUserId, auth, setChat)
+      const res = await axios.post('/api/last', {
+        to : friendUserId, 
+        from : auth.userId
+      })
+      setChat(res.data.data.messages)
       console.log(chat)
       await axios.get('/api/socket')
       socket = io()
