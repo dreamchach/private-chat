@@ -7,6 +7,8 @@ const ChatBodyInner = ({index, item, auth, router} : any) => {
     const searchParams = useSearchParams()
     const friendAvatar = searchParams.get('friendAvatar')
     const friendColor = searchParams.get('friendColor')
+    console.log('friendAvatar', friendAvatar)
+    console.log('friendColor', friendColor)
 
     return (
         <div key={index} className={`flex gap-x-2.5 mt-1 ${item.from === auth.userId && 'justify-end'}`}>

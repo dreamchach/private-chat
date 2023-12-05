@@ -69,6 +69,7 @@ export const chatLast = async (friendUserId : any, auth : any, setChat : any) =>
       to : friendUserId, 
       from : auth.userId
     })
+    console.log('res', res)
     setChat(res.data.data.messages)
   }
 
