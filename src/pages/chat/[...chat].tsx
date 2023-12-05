@@ -44,6 +44,7 @@ const Chat = () => {
     }
     
     useEffect(() => {
+      chatLast(friendUserId, auth, setChat)
       dispatch(setRoom({roomId : '', roomName : ''}))
       if(auth.userId !== '' && auth.nickName !== '') {
         socketInitializer()
@@ -54,15 +55,11 @@ const Chat = () => {
           socket.disconnect()
         }
       }
-    }, [])
+    }, [friendUserId])
 
     useEffect(() => {
         window.scrollTo(0, document.body.scrollHeight)
     }, [chat])
-
-    useEffect(() => {
-      chatLast(friendUserId, auth, setChat)
-    }, [friendUserId])
     
    
   return (
