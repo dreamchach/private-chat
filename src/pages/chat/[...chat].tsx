@@ -23,18 +23,19 @@ const Chat = () => {
     let socket : any
   
     const socketInitializer = async () => {
-      const res = await axios.post('/api/last', {
-        to : friendUserId, 
-        from : auth.userId
-      })
-      setChat(res.data.data.messages)
-      console.log(chat)
       await axios.get('/api/socket')
       socket = io()
       socket.auth = auth
   
-      socket.on('connect', () => {
+      socket.on('connect', async () => {
         console.log('connected')
+
+        const res = await axios.post('/api/last', {
+          to : friendUserId, 
+          from : auth.userId
+        })
+        setChat(res.data.data.messages)
+        console.log(chat)
       })
 
       socket.on('messages', (payload : any) => {
