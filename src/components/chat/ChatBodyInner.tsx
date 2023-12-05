@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation'
 const ChatBodyInner = ({index, item, auth, router} : any) => {
     const searchParams = useSearchParams()
     const friendAvatar = searchParams.get('friendAvatar')
-    const friendColor = searchParams.get('friendColor')
+    const friendColor = searchParams.getAll('friendColor')
     console.log('friendAvatar', friendAvatar)
     console.log('friendColor', friendColor)
 
