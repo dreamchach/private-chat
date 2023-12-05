@@ -42,6 +42,8 @@ const Chat = () => {
       })
     }
 
+    console.log(chat)
+
 
     
     useEffect(() => {
@@ -62,7 +64,6 @@ const Chat = () => {
     }, [chat])
 
     useEffect(() => {
-      console.log(chat)
       chatLast(friendUserId, auth, setChat)
     }, [friendUserId])
     

@@ -6,7 +6,6 @@ const ChatInput = ({message, setMessage, router, auth} : any) => {
     const [double, setDouble] = useState(false)
     const searchParams = useSearchParams()
     const friendUserId = searchParams.get('friendUserId')
-    console.log(friendUserId)
     const input = useRef<any>(null)
     const payload = {
         from : auth.userId,
