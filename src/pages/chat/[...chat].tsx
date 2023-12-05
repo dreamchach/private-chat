@@ -24,6 +24,8 @@ const Chat = () => {
     let socket : any
   
     const socketInitializer = async () => {
+      await chatLast(friendUserId, auth, setChat)
+      console.log(chat)
       await axios.get('/api/socket')
       socket = io()
       socket.auth = auth
@@ -44,7 +46,6 @@ const Chat = () => {
     }
     
     useEffect(() => {
-      chatLast(friendUserId, auth, setChat)
       dispatch(setRoom({roomId : '', roomName : ''}))
       if(auth.userId !== '' && auth.nickName !== '') {
         socketInitializer()
