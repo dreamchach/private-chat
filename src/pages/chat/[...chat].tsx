@@ -29,14 +29,6 @@ const Chat = () => {
   
       socket.on('connect', async () => {
         console.log('connected')
-
-        await axios.post('/api/last', {
-          to : friendUserId, 
-          from : auth.userId
-        }).then((res) => {
-          setChat([...res.data.data.messages])
-          console.log('chat', chat)          
-        })
       })
 
       socket.on('messages', (payload : any) => {
@@ -61,7 +53,21 @@ const Chat = () => {
           socket.disconnect()
         }
       }
+    }, [chat])
+
+    useEffect(() => {
+      const lastApi = async () => {
+        await axios.post('/api/last', {
+          to : friendUserId, 
+          from : auth.userId
+        }).then((res) => {
+          setChat([...res.data.data.messages])
+          console.log('chat', chat)          
+        })        
+      }
+      lastApi()
     }, [friendUserId])
+    
 
     useEffect(() => {
         window.scrollTo(0, document.body.scrollHeight)
