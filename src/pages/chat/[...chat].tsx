@@ -34,8 +34,8 @@ const Chat = () => {
           to : friendUserId, 
           from : auth.userId
         })
-        setChat(res.data.data.messages)
-        console.log(chat)
+        setChat([...res.data.data.messages])
+        console.log('chat', chat)
       })
 
       socket.on('messages', (payload : any) => {
