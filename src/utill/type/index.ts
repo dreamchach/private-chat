@@ -1,7 +1,8 @@
 import { AnyAction } from "@reduxjs/toolkit";
 import { Dispatch } from "react";
+import { Iauth } from "./all";
 
 export interface IRandomAvatar {
-    auth : any;
+    auth : Iauth;
     dispatch : Dispatch<AnyAction>
 }

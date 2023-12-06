@@ -16,7 +16,7 @@ const RandomAvatar = ({auth, dispatch} : IRandomAvatar) => {
         </div>
         <button 
             onClick={() => onRandom(dispatch)}
-            className="box-border mx-14 my-0 w-300 py-2.5 px-5 rounded-xl border-2 bg-blow-green shadow border-black min-w-300 hover:bg-hover-green hover:text-white hover:shadow-xl hover:border-white"
+            className="transition box-border mx-14 my-0 w-300 py-2.5 px-5 rounded-xl border-2 bg-blow-green shadow border-black min-w-300 hover:bg-hover-green hover:text-white hover:shadow-xl hover:border-white"
         >
             Random
         </button>

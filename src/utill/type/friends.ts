@@ -1,9 +1,14 @@
 import { AnyAction } from "@reduxjs/toolkit";
 import { Dispatch } from "react";
+import { Iauth, IwaitPeople } from "./all";
 
 export interface IFriendsHeader {
     dispatch : Dispatch<AnyAction>
 }
 export interface IAboutMe {
-    auth : any
+    auth : Iauth
+}
+export interface IaboutFriends {
+    friend : any;
+    wait : IwaitPeople;
 }

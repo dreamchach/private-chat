@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { avatarLists } from "../array/avatarList"
+import { avatarLists } from '@/utill/array-object/avatarList'
 
 export const authSlice = createSlice({
     name : 'auth',
@@ -8,6 +8,10 @@ export const authSlice = createSlice({
       color : ["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"],
       avatar : 'Mary Baker',
       userId : '',
+      room : {
+        roomId : '',
+        roomName : ''
+      }
     },
     reducers : {
       randomColor : (state : any) => {
@@ -35,10 +39,13 @@ export const authSlice = createSlice({
       removeUser : (state) => {
         state.nickName = ''
         state.userId = ''
-      }
+      },
+      setRoom : (state, action) => {
+        state.room = action.payload
+      },
     },
 })
 
-export const {randomColor, randomAvatar, setNickName, setUserId, removeUser} = authSlice.actions
+export const {randomColor, randomAvatar, setNickName, setUserId, removeUser, setRoom} = authSlice.actions
 
 export default authSlice.reducer

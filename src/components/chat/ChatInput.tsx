@@ -1,20 +1,40 @@
-import React from 'react'
-import { payload } from '@/utill/functions/function';
-import { inputClick, inputEnter } from '@/utill/functions/socket';
+import { Nowtime, privateChatInputClick, privateChatInputEnter } from '@/utill/functions/function'
+import { IchatInput } from '@/utill/type/chat'
+import { useSearchParams } from 'next/navigation'
+import React, { useEffect, useRef, useState } from 'react'
 
-const ChatInput = ({message, setMessage, socket, router, auth, setChat, chat} : any) => {
+const ChatInput = ({message, setMessage, auth} : IchatInput) => {
+    const [double, setDouble] = useState(false)
+    const searchParams = useSearchParams()
+    const friendUserId = searchParams.get('friendUserId')
+    const input = useRef<any>(null)
+    const payload = {
+        from : auth.userId,
+        to : friendUserId,
+        time : Nowtime(),
+        message,
+    }
+    
+    useEffect(() => {
+        if(double === false) {
+            input.current.focus()
+        }
+    }, [double])
+
     return (
         <div className='fixed bottom-0 bg-basic-green p-1.5 w-full flex justify-between gap-1.5'>
             <input 
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
-                onKeyUp={(event) => inputEnter(event, socket, message, router, payload(auth, router, message), setChat, chat, setMessage)}
+                onKeyUp={(event) => privateChatInputEnter(event.key, message, setDouble, friendUserId, auth, payload, setMessage)}
                 className='p-1.5 w-full rounded-lg'
+                disabled={double}
+                ref={input}
             />
             <button 
-                onClick={() => inputClick(socket, message, router, payload(auth, router, message), setChat, chat, setMessage)}
-                disabled={message === '' ? true : false}
-                className={`shrink-0 py-1.5 px-4 my-0 rounded-lg ${message === '' ? 'bg-none-button text-none-text' : 'hover:bg-hover-green hover:text-white'}`}
+                onClick={() => privateChatInputClick(message, setDouble, friendUserId, auth, payload, setMessage)}
+                disabled={(message === '' ? true : false) && double}
+                className={`shrink-0 py-1.5 px-4 my-0 rounded-lg ${message === '' ? 'bg-none-button text-none-text' : 'hover:bg-hover-green hover:text-white transition'}`}
             >
                 전송
             </button>            
