@@ -1,8 +1,9 @@
 import { Nowtime, privateChatInputClick, privateChatInputEnter } from '@/utill/functions/function'
+import { IchatInput } from '@/utill/type/chat'
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 
-const ChatInput = ({message, setMessage, router, auth} : any) => {
+const ChatInput = ({message, setMessage, auth} : IchatInput) => {
     const [double, setDouble] = useState(false)
     const searchParams = useSearchParams()
     const friendUserId = searchParams.get('friendUserId')
@@ -25,7 +26,7 @@ const ChatInput = ({message, setMessage, router, auth} : any) => {
             <input 
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
-                onKeyUp={(event) => privateChatInputEnter(event, message, setDouble, friendUserId, auth, payload, setMessage)}
+                onKeyUp={(event) => privateChatInputEnter(event.key, message, setDouble, friendUserId, auth, payload, setMessage)}
                 className='p-1.5 w-full rounded-lg'
                 disabled={double}
                 ref={input}

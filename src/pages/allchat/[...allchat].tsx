@@ -11,12 +11,13 @@ import AllChatUserList from '@/components/allchat/AllChatUserList'
 import AllChatBody from '@/components/allchat/AllChatBody'
 import AllChatInput from '@/components/allchat/AllChatInput'
 import AllChatModal from '@/components/allchat/AllChatModal'
+import { Ipayload, IroomData, Istate } from '@/utill/type/all'
 
 
 
 const AllChat = () => {
   const router = useRouter()
-  const auth = useSelector((state : any) => {
+  const auth = useSelector((state : Istate) => {
     return state.auth
   })
   const dispatch = useDispatch()
@@ -49,35 +50,35 @@ const AllChat = () => {
 
       await axios.post('/api/welcome', {
         roomid : roomId, 
-        auth : auth
+        auth : auth.nickName
       })
     })
 
-    socket.on('room-data', (data : any) => {
+    socket.on('room-data', (data : IroomData) => {
       if(data?.users !== undefined) {
         setRoomUsers(data.users)
       }
     })
 
-    socket.on('welcome-message', (data : any) => {
+    socket.on('welcome-message', (data : string) => {
       const adminPayload = {
         from : 'admin',
-        message : `${data.nickName}님이 입장했습니다`
+        message : `${data}님이 입장했습니다`
       }
       chat.push(adminPayload)
       setChat([...chat])
     })
 
-    socket.on('goodbye-message', (data : any) => {
+    socket.on('goodbye-message', (data : string) => {
       const adminPayload = {
         from : 'admin',
-        message : `${data.nickName}님이 퇴장했습니다`
+        message : `${data}님이 퇴장했습니다`
       }
       chat.push(adminPayload)
       setChat([...chat])
     })
 
-    socket.on('room-messages', (payload : any) => {
+    socket.on('room-messages', (payload : Ipayload) => {
       chat.push(payload)
       setChat([...chat])
     })

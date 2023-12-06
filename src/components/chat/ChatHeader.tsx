@@ -3,7 +3,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-const ChatHeader = ({router} : any) => {
+const ChatHeader = () => {
     const searchParams = useSearchParams()
     const friendNickname = searchParams.get('friendNickname')
 

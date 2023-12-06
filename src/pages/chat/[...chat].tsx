@@ -8,12 +8,13 @@ import ChatBody from '@/components/chat/ChatBody';
 import ChatInput from '@/components/chat/ChatInput';
 import { setRoom } from '@/utill/redux/authSlice';
 import { useSearchParams } from 'next/navigation';
+import { Ipayload, Istate } from '@/utill/type/all';
 
 const Chat = () => {
     const router = useRouter()
     const [message, setMessage] = useState('')
     const [chat, setChat] = useState<any>([])
-    const auth = useSelector((state : any) => {
+    const auth = useSelector((state : Istate) => {
         return state.auth
     })
     const dispatch = useDispatch()
@@ -31,7 +32,7 @@ const Chat = () => {
         console.log('connected')
       })
 
-      socket.on('messages', (payload : any) => {
+      socket.on('messages', (payload : Ipayload) => {
         console.log(chat)
         chat.push(payload)
         setChat([...chat])
@@ -76,9 +77,9 @@ const Chat = () => {
    
   return (
     <div>
-        <ChatHeader router={router} />
-        <ChatBody chat={chat} auth={auth} router={router} />
-        <ChatInput message={message} setMessage={setMessage} socket={socket} router={router} auth={auth} setChat={setChat} chat={chat} />
+        <ChatHeader />
+        <ChatBody chat={chat} auth={auth} />
+        <ChatInput message={message} setMessage={setMessage} auth={auth} />
     </div>
   )
 }

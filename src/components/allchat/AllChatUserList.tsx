@@ -1,8 +1,9 @@
 import { goFriendChat } from '@/utill/functions/link'
+import { IallChatUserList } from '@/utill/type/allchat'
 import Avatar from 'boring-avatars'
 import React from 'react'
 
-const AllChatUserList = ({roomUsers, dispatch, auth, router} : any) => {
+const AllChatUserList = ({roomUsers, dispatch, auth, router} : IallChatUserList) => {
   return (
     <div className='w-200 py-10 px-5 fixed right-0 h-90vh bg-none-text top-12'>
     {roomUsers.length > 0 && roomUsers.map((item : any) => (

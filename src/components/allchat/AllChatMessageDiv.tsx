@@ -1,6 +1,7 @@
+import { IallChatBodyInner } from '@/utill/type/allchat'
 import React from 'react'
 
-const AllChatMessageDiv = ({item, auth} : any) => {
+const AllChatMessageDiv = ({item, auth} : IallChatBodyInner) => {
     console.log('item', item)
     console.log('auth', auth)
     

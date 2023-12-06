@@ -75,7 +75,7 @@ export default function handler(req: any, res: any) {
       io.to(roomId).emit('room-data', roomdata)
 
       socket.on('disconnect', () => {
-        io.to(roomId).emit('goodbye-message', auth)
+        io.to(roomId).emit('goodbye-message', auth.nickName)
         
         users = users.filter((user : any) => user.userId !== socket.handshake.auth.userId)
         io.emit('users-data', {users})

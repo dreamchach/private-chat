@@ -1,8 +1,9 @@
 import { customStyles } from '@/utill/array-object/modalStyle'
+import { IallChatModal } from '@/utill/type/allchat'
 import React from 'react'
 import Modal from 'react-modal'
 
-const AllChatModal = ({modal, router, setModal} : any) => {
+const AllChatModal = ({modal, router, setModal} : IallChatModal) => {
   return (
     <Modal 
     isOpen={modal}

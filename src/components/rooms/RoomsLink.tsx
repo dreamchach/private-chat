@@ -1,10 +1,11 @@
 import { setRoom } from '@/utill/redux/authSlice'
+import { IroomLink } from '@/utill/type/room'
 import Avatar from 'boring-avatars'
 import Link from 'next/link'
 import React from 'react'
 import { FaUser } from 'react-icons/fa'
 
-const RoomsLink = ({item, dispatch} : any) => {
+const RoomsLink = ({item, dispatch} : IroomLink) => {
   return (
     <Link href={{
         pathname : `/allchat/${item.roomId}`,

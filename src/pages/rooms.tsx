@@ -9,13 +9,14 @@ import { io } from 'socket.io-client';
 import { setRoom } from '@/utill/redux/authSlice';
 import RoomsLink from '@/components/rooms/RoomsLink';
 import RoomsModal from '@/components/rooms/RoomsModal';
+import { Istate } from '@/utill/type/all';
 
 const Rooms = () => {
   const [modal, setModal] = useState(false)
   const [rooms, setRooms] = useState([])
   const dispatch = useDispatch()
   const router = useRouter()
-  const auth = useSelector((state : any) => {
+  const auth = useSelector((state : Istate) => {
     return state.auth
   })
 

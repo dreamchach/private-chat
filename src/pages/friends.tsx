@@ -10,13 +10,14 @@ import AboutMe from '@/components/friends/AboutMe'
 import { useRouter } from 'next/router'
 import Layout from '@/components/Layout'
 import { setRoom } from '@/utill/redux/authSlice'
+import { Iauth, Istate } from '@/utill/type/all'
 
 export default function Home() {
   const [friends, setFriends] = useState<any>([])
-  const auth = useSelector((state : any) => {
+  const auth = useSelector((state : Istate) => {
       return state.auth
   })
-  const wait = useSelector((state : any) => {
+  const wait = useSelector((state : Istate) => {
       return state.wait
   })
   const dispatch = useDispatch()
@@ -33,15 +34,15 @@ export default function Home() {
       console.log('connected')
     })
 
-    socket.on('users-data', ({users} : any) => {
-      const notMe = users.filter((user : any) => {
+    socket.on('users-data', ({users} : {users : Iauth[]}) => {
+      const notMe = users.filter((user : Iauth) => {
         const answer = user.userId !== auth.userId
         return answer
       })
       setFriends(notMe)
     })
 
-    socket.on('fetch-messages', (to : any) => {
+    socket.on('fetch-messages', (to : string) => {
       dispatch(input(to))
     })
 

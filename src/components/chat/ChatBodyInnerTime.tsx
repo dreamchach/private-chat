@@ -1,7 +1,8 @@
+import { IchatBodyInnerTime } from '@/utill/type/chat'
 import { useSearchParams } from 'next/navigation'
 import React from 'react'
 
-const ChatBodyInnerTime = ({item, auth, router} : any) => {
+const ChatBodyInnerTime = ({item, auth} : IchatBodyInnerTime) => {
     const searchParams = useSearchParams()
     const friendNickname = searchParams.get('friendNickname')
 

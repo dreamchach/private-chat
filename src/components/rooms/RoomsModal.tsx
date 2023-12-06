@@ -1,9 +1,10 @@
 import { customStyles } from '@/utill/array-object/modalStyle'
 import { roomInputClick, roomInputKeyup } from '@/utill/functions/function'
+import { IroomModal } from '@/utill/type/room'
 import React, { useState } from 'react'
 import Modal from 'react-modal'
 
-const RoomsModal = ({modal, setModal, dispatch, router} : any) => {
+const RoomsModal = ({modal, setModal, dispatch, router} : IroomModal) => {
     const [roomName, setRoomName] = useState('')
 
   return (
@@ -18,7 +19,7 @@ const RoomsModal = ({modal, setModal, dispatch, router} : any) => {
         value={roomName} 
         onChange={(event) => setRoomName(event.target.value)} 
         className='py-2.5 px-5 rounded-lg'
-        onKeyUp={(event) => roomInputKeyup(event, roomName, setModal, dispatch, router)}
+        onKeyUp={(event) => roomInputKeyup(event.key, roomName, setModal, dispatch, router)}
       />
     </div>
     <div className='mt-10 mb-5'>

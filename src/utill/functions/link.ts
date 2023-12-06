@@ -2,6 +2,7 @@ import { setNickName, setRoom, setUserId } from '@/utill/redux/authSlice'
 import { AnyAction } from "@reduxjs/toolkit";
 import { NextRouter } from "next/router";
 import { Dispatch } from "react";
+import { Iauth } from '../type/all';
 
 export const onclick = async (name : string, router : NextRouter, dispatch : Dispatch<AnyAction>) => {
     dispatch(setNickName(name))
@@ -21,7 +22,7 @@ export const pressEnter = (key : string, name : string, router : NextRouter, dis
         alert('이름은 공백이 불가능합니다')
     }
 }
-export const goFriendChat = (item : any, dispatch : any, auth : any, router : any) => {
+export const goFriendChat = (item : any, dispatch : React.Dispatch<AnyAction>, auth : Iauth, router : NextRouter) => {
     dispatch(setRoom({roomId : '', roomName : ''}))
     if(item.userId !== auth.userId) {
       router.push({

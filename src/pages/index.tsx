@@ -2,13 +2,14 @@ import RandomAvatar from '@/components/index/RandomAvatar'
 import { onRandom } from '@/utill/functions/function'
 import { onclick, pressEnter } from '@/utill/functions/link'
 import { setRoom } from '@/utill/redux/authSlice'
+import { Istate } from '@/utill/type/all'
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Index = () => {
   const router = useRouter()
-  const auth = useSelector((state : any) => {
+  const auth = useSelector((state : Istate) => {
     return state.auth
   })
   const [name, setName] = useState(auth.nickName)

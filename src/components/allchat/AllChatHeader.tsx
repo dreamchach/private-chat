@@ -1,8 +1,9 @@
+import { IallChatHeader } from '@/utill/type/allchat'
 import React from 'react'
 import { FaArrowLeft } from 'react-icons/fa'
 import { IoMenu } from 'react-icons/io5'
 
-const AllChatHeader = ({setModal, roomName, setOpenRoomUsers, openRoomUsers} : any) => {
+const AllChatHeader = ({setModal, roomName, setOpenRoomUsers, openRoomUsers} : IallChatHeader) => {
   return (
     <div className='flex justify-between h-12 px-5 bg-basic-green fixed w-full top-0'>
     <div className='flex items-center gap-5'>

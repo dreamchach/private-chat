@@ -1,4 +1,6 @@
-export default function ChatHandler (req : any, res : any) {
+import { NextApiRequest } from "next"
+
+export default function ChatHandler (req : NextApiRequest, res : any) {
     if(req.method === 'POST') {
      const roomId = req.body.roomId
      const payload = req.body.payload
